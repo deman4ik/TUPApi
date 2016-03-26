@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
@@ -8,11 +6,11 @@ using AutoMapper;
 using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Authentication;
 using Microsoft.Azure.Mobile.Server.Config;
-using tupapiService.DataObjects;
-using tupapiService.Models;
 using Owin;
 using tupapi.Shared.Enums;
+using tupapiService.DataObjects;
 using tupapiService.Helpers.DBHelpers;
+using tupapiService.Models;
 
 namespace tupapiService
 {
@@ -26,9 +24,9 @@ namespace tupapiService
             config.EnableSystemDiagnosticsTracing();
 
             new MobileAppConfiguration()
-              //  .AddMobileAppHomeController()
+                //  .AddMobileAppHomeController()
                 .UseDefaultConfiguration()
-              //  .MapLegacyCrossDomainController()
+                //  .MapLegacyCrossDomainController()
                 .ApplyTo(config);
 
             Mapper.Initialize(cfg =>
@@ -37,14 +35,16 @@ namespace tupapiService
                 cfg.CreateMap<User, UserDTO>();
                 cfg.CreateMap<UserDTO, User>();
                 // PostDTO Mapping
-                cfg.CreateMap<Post, PostDTO>().ForMember(dst => dst.UserName, map => map.MapFrom(src => src.User.Name)).ForMember(dst => dst.Likes, map => map.MapFrom(src => src.Votes.Count(v => v.Type == VoteType.Up)));
+                cfg.CreateMap<Post, PostDTO>()
+                    .ForMember(dst => dst.UserName, map => map.MapFrom(src => src.User.Name))
+                    .ForMember(dst => dst.Likes, map => map.MapFrom(src => src.Votes.Count(v => v.Type == VoteType.Up)));
                 cfg.CreateMap<PostDTO, Post>();
             });
-          // Use Entity Framework Code First to create database tables based on your DbContext
-          Database.SetInitializer(new TupapiInitializer());
+            // Use Entity Framework Code First to create database tables based on your DbContext
+            Database.SetInitializer(new TupapiInitializer());
 
             // To prevent Entity Framework from modifying your database schema, use a null database initializer
-             //Database.SetInitializer<TupapiContext>(null);
+            //Database.SetInitializer<TupapiContext>(null);
 
             MobileAppSettingsDictionary settings = config.GetMobileAppSettingsProvider().GetMobileAppSettings();
 
@@ -55,8 +55,8 @@ namespace tupapiService
                 app.UseAppServiceAuthentication(new AppServiceAuthenticationOptions
                 {
                     SigningKey = ConfigurationManager.AppSettings["SigningKey"],
-                    ValidAudiences = new[] { ConfigurationManager.AppSettings["ValidAudience"] },
-                    ValidIssuers = new[] { ConfigurationManager.AppSettings["ValidIssuer"] },
+                    ValidAudiences = new[] {ConfigurationManager.AppSettings["ValidAudience"]},
+                    ValidIssuers = new[] {ConfigurationManager.AppSettings["ValidIssuer"]},
                     TokenHandler = config.GetAppServiceTokenHandler()
                 });
             }
@@ -64,7 +64,4 @@ namespace tupapiService
             ConfigureSwagger(config);
         }
     }
-
-   
 }
-

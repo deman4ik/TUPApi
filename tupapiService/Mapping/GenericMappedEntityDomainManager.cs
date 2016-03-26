@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.OData;
 using AutoMapper.QueryableExtensions;
@@ -14,27 +11,32 @@ using tupapiService.Models;
 
 namespace tupapiService.Mapping
 {
-    public class GenericMappedEntityDomainManager<TData, TModel>  : MappedEntityDomainManager<TData, TModel>
-          where TData : class, ITableData
+    public class GenericMappedEntityDomainManager<TData, TModel> : MappedEntityDomainManager<TData, TModel>
+        where TData : class, ITableData
         where TModel : class, ITableData
     {
         private ITupapiContext _context;
-        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request) : base(context, request)
+
+        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request)
+            : base(context, request)
         {
             Request = request;
-            this._context = context;
+            _context = context;
         }
 
-        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request, bool enableSoftDelete) : base(context, request, enableSoftDelete)
+        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request, bool enableSoftDelete)
+            : base(context, request, enableSoftDelete)
         {
             Request = request;
-            this._context = context;
-            this.EnableSoftDelete = enableSoftDelete;
+            _context = context;
+            EnableSoftDelete = enableSoftDelete;
         }
 
         public override IQueryable<TData> Query()
         {
-            IQueryable<TData> query = this.Context.Set<TModel>().ProjectTo<TData>(); query = TableUtils.ApplyDeletedFilter(query, this.IncludeDeleted); return query;
+            IQueryable<TData> query = Context.Set<TModel>().ProjectTo<TData>();
+            query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
+            return query;
         }
 
         public override SingleResult<TData> Lookup(string id)
@@ -43,8 +45,8 @@ namespace tupapiService.Mapping
             {
                 throw new ArgumentNullException("id");
             }
-            IQueryable<TData> query = this.Context.Set<TModel>().Where(item => item.Id == id).ProjectTo<TData>();
-            query = TableUtils.ApplyDeletedFilter(query, this.IncludeDeleted);
+            IQueryable<TData> query = Context.Set<TModel>().Where(item => item.Id == id).ProjectTo<TData>();
+            query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return SingleResult.Create(query);
         }
 

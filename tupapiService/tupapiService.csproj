@@ -197,18 +197,29 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Authentication\FB\" />
+    <Folder Include="Authentication\Instagram\" />
+    <Folder Include="Authentication\VK\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.MobileApp.cs" />
     <Compile Include="App_Start\Startup.Swagger.cs" />
     <Compile Include="Authentication\AccessToken.cs" />
+    <Compile Include="Authentication\BaseAuth.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserTableController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataObjects\PostDTO.cs" />
     <Compile Include="DataObjects\UserDTO.cs" />
+    <Compile Include="Helpers\AuthHelper.cs" />
+    <Compile Include="Helpers\CheckHelpers\CheckData.cs" />
+    <Compile Include="Helpers\DBHelpers\TestDbPopulator.cs" />
     <Compile Include="Helpers\DBHelpers\TupapiInitializer.cs" />
+    <Compile Include="Helpers\ExceptionHelpers\ApiException.cs" />
+    <Compile Include="Helpers\CheckHelpers\CheckHelper.cs" />
+    <Compile Include="Helpers\SequentialGuid.cs" />
     <Compile Include="Mapping\GenericMappedEntityDomainManager.cs" />
     <Compile Include="Mapping\UserDomainManager.cs" />
     <Compile Include="Helpers\DBHelpers\DbValidationHelper.cs" />

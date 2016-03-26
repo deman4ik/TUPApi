@@ -1,22 +1,23 @@
 ﻿namespace tupapi.Shared.Enums
 {
     /// <summary>
-    /// Photo Types
+    ///     Photo Status
     /// </summary>
-    public enum PhotoType
+    public enum PhotoStatus
     {
         /// <summary>
-        /// Standart Photo
+        ///     Planned for publication
         /// </summary>
-        Basic,
-        /// <summary>
-        /// Paid Photo from Commercial Account
-        /// </summary>
-        Commercial,
-        /// <summary>
-        /// Global announcement
-        /// </summary>
-        Global
-    }
+        Planned,
 
+        /// <summary>
+        ///     Publicated
+        /// </summary>
+        Running,
+
+        /// <summary>
+        ///     Ended publication
+        /// </summary>
+        Ended
+    }
 }

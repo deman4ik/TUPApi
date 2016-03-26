@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.Azure.Mobile.Server;
+using tupapi.Shared.Enums.Auth;
 using tupapi.Shared.Interfaces;
 
 namespace tupapiService.Models
@@ -24,10 +21,10 @@ namespace tupapiService.Models
         public string UserId { get; set; }
 
         /// <summary>
-        ///     Authentication Provider Name
+        ///     Authentication Provider
         /// </summary>
         [Required]
-        public string Provider { get; set; }
+        public Provider Provider { get; set; }
 
         /// <summary>
         ///     Authentication Provider unique ID
@@ -36,12 +33,12 @@ namespace tupapiService.Models
         public string ProviderId { get; set; }
 
         /// <summary>
-        /// Access Token for Provider
+        ///     Access Token for Provider
         /// </summary>
         public string AccessToken { get; set; }
 
         /// <summary>
-        /// Valid Access Token Sign 
+        ///     Valid Access Token Sign
         /// </summary>
         public bool IsAccessTokenValid { get; set; }
 

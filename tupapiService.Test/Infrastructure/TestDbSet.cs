@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace tupapiService.Test.Infrastructure
 {
     public class TestDbSet<T> : DbSet<T>, IQueryable, IEnumerable<T>
         where T : class
     {
-        ObservableCollection<T> _data;
-        IQueryable _query;
+        private ObservableCollection<T> _data;
+        private IQueryable _query;
 
         public TestDbSet()
         {

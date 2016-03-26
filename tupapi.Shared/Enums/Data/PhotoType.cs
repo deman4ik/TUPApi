@@ -1,22 +1,23 @@
 ﻿namespace tupapi.Shared.Enums
 {
     /// <summary>
-    /// Vote Type Enum
+    ///     Photo Types
     /// </summary>
-    public enum VoteType
+    public enum PhotoType
     {
         /// <summary>
-        /// Like
+        ///     Standart Photo
         /// </summary>
-        Up,
-        /// <summary>
-        /// Dislike
-        /// </summary>
-        Down,
-        /// <summary>
-        /// Spam or Abuse
-        /// </summary>
-        Abuse
-    }
+        Basic,
 
+        /// <summary>
+        ///     Paid Photo from Commercial Account
+        /// </summary>
+        Commercial,
+
+        /// <summary>
+        ///     Global announcement
+        /// </summary>
+        Global
+    }
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Web.Http.OData;
 using Microsoft.Azure.Mobile.Server;
-using Microsoft.Azure.Mobile.Server.Tables;
 using tupapiService.DataObjects;
 using tupapiService.Mapping;
 using tupapiService.Models;
@@ -39,11 +35,11 @@ namespace tupapiService.Controllers
             return UpdateAsync(id, patch);
         }
 
-        [ResponseType(typeof(UserDTO))]
+        [ResponseType(typeof (UserDTO))]
         public async Task<IHttpActionResult> PostUser(UserDTO user)
         {
             UserDTO current = await InsertAsync(user);
-            return CreatedAtRoute("Tables", new { id = current.Id }, current);
+            return CreatedAtRoute("Tables", new {id = current.Id}, current);
         }
 
         public Task DeleteUser(string id)

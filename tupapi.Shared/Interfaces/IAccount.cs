@@ -1,4 +1,6 @@
-﻿namespace tupapi.Shared.Interfaces
+﻿using tupapi.Shared.Enums.Auth;
+
+namespace tupapi.Shared.Interfaces
 {
     /// <summary>
     ///     User Authentication Accounts
@@ -17,9 +19,9 @@
         string UserId { get; set; }
 
         /// <summary>
-        ///     Authentication Provider Name
+        ///     Authentication Provider
         /// </summary>
-        string Provider { get; set; }
+        Provider Provider { get; set; }
 
         /// <summary>
         ///     Authentication Provider unique ID
@@ -27,7 +29,7 @@
         string ProviderId { get; set; }
 
         /// <summary>
-        /// Valid Access Token Sign 
+        ///     Valid Access Token Sign
         /// </summary>
         bool IsAccessTokenValid { get; set; }
     }

@@ -12,21 +12,21 @@ namespace tupapiService
         {
             // Use the custom ApiExplorer that applies constraints. This prevents
             // duplicate routes on /api and /tables from showing in the Swagger doc.
-            config.Services.Replace(typeof(IApiExplorer), new MobileAppApiExplorer(config));
+            config.Services.Replace(typeof (IApiExplorer), new MobileAppApiExplorer(config));
             config
-               .EnableSwagger(c =>
-               {
-                   c.SingleApiVersion("v1", "tupapi");
+                .EnableSwagger(c =>
+                {
+                    c.SingleApiVersion("v1", "tupapi");
 
-               // Tells the Swagger doc that any MobileAppController needs a
-               // ZUMO-API-VERSION header with default 2.0.0
-               c.OperationFilter<MobileAppHeaderFilter>();
+                    // Tells the Swagger doc that any MobileAppController needs a
+                    // ZUMO-API-VERSION header with default 2.0.0
+                    c.OperationFilter<MobileAppHeaderFilter>();
 
-               // Looks at attributes on properties to decide whether they are readOnly.
-               // Right now, this only applies to the DatabaseGeneratedAttribute.
-               c.SchemaFilter<MobileAppSchemaFilter>();
-               })
-               .EnableSwaggerUi();
+                    // Looks at attributes on properties to decide whether they are readOnly.
+                    // Right now, this only applies to the DatabaseGeneratedAttribute.
+                    c.SchemaFilter<MobileAppSchemaFilter>();
+                })
+                .EnableSwaggerUi();
         }
     }
 }

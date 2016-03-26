@@ -1,22 +1,23 @@
 ﻿namespace tupapi.Shared.Enums
 {
     /// <summary>
-    /// Photo Status
+    ///     Vote Type Enum
     /// </summary>
-    public enum PhotoStatus
+    public enum VoteType
     {
         /// <summary>
-        /// Planned for publication
+        ///     Like
         /// </summary>
-        Planned,
-        /// <summary>
-        /// Publicated
-        /// </summary>
-        Running,
-        /// <summary>
-        /// Ended publication
-        /// </summary>
-        Ended
-    }
+        Up,
 
+        /// <summary>
+        ///     Dislike
+        /// </summary>
+        Down,
+
+        /// <summary>
+        ///     Spam or Abuse
+        /// </summary>
+        Abuse
+    }
 }

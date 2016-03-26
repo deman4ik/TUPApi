@@ -13,12 +13,12 @@ namespace tupapiService.Controllers
         // GET api/values
         public string Get()
         {
-            MobileAppSettingsDictionary settings = this.Configuration.GetMobileAppSettingsProvider().GetMobileAppSettings();
-            ITraceWriter traceWriter = this.Configuration.Services.GetTraceWriter();
+            MobileAppSettingsDictionary settings = Configuration.GetMobileAppSettingsProvider().GetMobileAppSettings();
+            ITraceWriter traceWriter = Configuration.Services.GetTraceWriter();
 
             string host = settings.HostName ?? "localhost";
             string greeting = "Hello from " + host;
-            
+
             traceWriter.Info(greeting);
             return greeting;
         }

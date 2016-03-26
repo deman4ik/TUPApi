@@ -35,15 +35,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DataObjects\BaseResponse.cs" />
+    <Compile Include="Helpers\Const.cs" />
+    <Compile Include="DataObjects\StandartRegistrationRequest.cs" />
     <Compile Include="DataObjects\User.cs" />
     <Compile Include="DataObjects\Post.cs" />
     <Compile Include="Data\DataGenerator.cs" />
-    <Compile Include="Enums\PhotoStatus.cs" />
-    <Compile Include="Enums\PhotoType.cs" />
-    <Compile Include="Enums\UserAction.cs" />
-    <Compile Include="Enums\UserType.cs" />
-    <Compile Include="Enums\VoteType.cs" />
+    <Compile Include="Enums\Auth\Provider.cs" />
+    <Compile Include="Enums\ApiResult.cs" />
+    <Compile Include="Enums\Errors\ErrorType.cs" />
+    <Compile Include="Enums\Data\PhotoStatus.cs" />
+    <Compile Include="Enums\Data\PhotoType.cs" />
+    <Compile Include="Enums\Data\UserAction.cs" />
+    <Compile Include="Enums\Data\UserType.cs" />
+    <Compile Include="Enums\Data\VoteType.cs" />
+    <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Interfaces\IAccount.cs" />
+    <Compile Include="Interfaces\IBaseResponse.cs" />
     <Compile Include="Interfaces\ITableData.cs" />
     <Compile Include="Interfaces\IPost.cs" />
     <Compile Include="Interfaces\IUser.cs" />
@@ -52,7 +60,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.0.0.6482\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.0.0.6482\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

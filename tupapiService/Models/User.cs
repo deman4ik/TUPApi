@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Microsoft.Azure.Mobile.Server;
 using tupapi.Shared.Enums;
 
@@ -10,9 +7,10 @@ namespace tupapiService.Models
     public class User : EntityData
     {
         /// <summary>
-        /// User Name
+        ///     User Name
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         ///     User Email
         /// </summary>
@@ -60,9 +58,11 @@ namespace tupapiService.Models
         public bool IsBlocked { get; set; }
 
         #region NavigataionProps
-        public ICollection<Account>  Accounts { get; set; }
+
+        public ICollection<Account> Accounts { get; set; }
         public ICollection<Post> Posts { get; set; }
-        public ICollection<Vote> Votes { get; set; } 
-#endregion
+        public ICollection<Vote> Votes { get; set; }
+
+        #endregion
     }
 }

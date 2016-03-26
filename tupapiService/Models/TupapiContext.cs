@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Linq;
-using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Tables;
-using tupapiService.DataObjects;
 using tupapiService.Helpers.DBHelpers;
 
 namespace tupapiService.Models
@@ -85,9 +81,5 @@ namespace tupapiService.Models
                 .WithRequired(s => s.Post)
                 .HasForeignKey(s => s.PostId);
         }
-
-        
-        
     }
-
 }

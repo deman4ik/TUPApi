@@ -8,9 +8,10 @@ namespace tupapi.Shared.Interfaces
     public interface IUser
     {
         /// <summary>
-        /// User Name
+        ///     User Name
         /// </summary>
         string Name { get; set; }
+
         /// <summary>
         ///     User Email
         /// </summary>

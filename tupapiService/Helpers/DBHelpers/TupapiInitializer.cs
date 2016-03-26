@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using tupapi.Shared.Data;
 using tupapiService.Models;
 
@@ -19,7 +16,7 @@ namespace tupapiService.Helpers.DBHelpers
                 var data = new DataGenerator();
                 foreach (var user in data.Users)
                 {
-                    context.Users.Add(new User()
+                    context.Users.Add(new User
                     {
                         Id = user.Id,
                         Email = user.Email,
@@ -44,14 +41,13 @@ namespace tupapiService.Helpers.DBHelpers
                         Debug.WriteLine(errr.ErrorMessage);
                     }
                 }
-                
+
                 Debug.WriteLine("################################################");
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
-            
         }
     }
 }
