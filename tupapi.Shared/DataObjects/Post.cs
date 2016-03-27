@@ -4,7 +4,7 @@ using tupapi.Shared.Interfaces;
 
 namespace tupapi.Shared.DataObjects
 {
-    public class Post : ITableData, IPost
+    public class Post : IPost
     {
         public string Id { get; set; }
         public DateTimeOffset? CreatedAt { get; set; }

@@ -38,6 +38,22 @@
         /// <summary>
         ///     SQL Error
         /// </summary>
-        Sql = 6
+        Sql = 6,
+
+        /// <summary>
+        /// Access Denied
+        /// </summary>
+        Denied = 7,
+
+        /// <summary>
+        /// Unauthenticated
+        /// </summary>
+        Unauth = 8,
+
+
+        /// <summary>
+        ///     An entity Not Found
+        /// </summary>
+        NotFound = 9,
     }
 }

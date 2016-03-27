@@ -40,7 +40,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnOk()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "test@test.ru",
                 Name = "test",
@@ -72,7 +72,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfEmailIsNull()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Name = "test",
                 Password = "abcdefghigklmpnop"
@@ -90,7 +90,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfNameIsNull()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "test@test.ru",
                 Password = "abcdefghigklmpnop"
@@ -108,7 +108,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfPasswordIsNull()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "test@test.ru",
                 Name = "test"
@@ -126,7 +126,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfEmailIsInvalid()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "testtestru",
                 Name = "test",
@@ -145,7 +145,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfNameIsInvalid()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "test@test.ru",
                 Name = "06test",
@@ -164,7 +164,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfPasswordIsInvalid()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "test@test.ru",
                 Name = "test",
@@ -183,7 +183,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfPasswordIsShort()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "test@test.ru",
                 Name = "test",
@@ -202,7 +202,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfUserWithSameEmailExist()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "user1@example.com",
                 Name = "user123",
@@ -221,7 +221,7 @@ namespace tupapiService.Test.Authentication
         [TestMethod]
         public void Registration_ShouldReturnErrorIfUserWithSameNameExist()
         {
-            var req = new StandartRegistrationRequest
+            var req = new StandartAuthRequest
             {
                 Email = "user1232@example.com",
                 Name = "user1",

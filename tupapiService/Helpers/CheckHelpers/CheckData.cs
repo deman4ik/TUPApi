@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using tupapi.Shared.Enums;
+using tupapi.Shared.Enums.Auth;
 using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;
 
@@ -39,7 +40,28 @@ namespace tupapiService.Helpers.CheckHelpers
                     throw new ApiException(ApiResult.Validation, ErrorType.UserWithNameExist, name);
             }
 
+            
             return user;
+        }
+
+        public static void IsUserBlocked(ITupapiContext context, string userId = null, User user = null)
+        {
+            if (!string.IsNullOrWhiteSpace(userId))
+                user = UserExist(context, false, userId);
+            if (user == null)
+                throw new ApiException(ApiResult.Validation, ErrorType.UserNotFound, userId);
+            if (user.IsBlocked)
+                throw new ApiException(ApiResult.Denied, ErrorType.UserBlocked, user.Id);
+            // TODO: Причина блокировки
+        }
+
+        public static Account AccountExist(ITupapiContext context, Provider provider, string userId)
+        {
+            var account = context.Accounts.SingleOrDefault(a => a.UserId == userId && a.Provider == provider);
+            if (account == null)
+                throw new ApiException(ApiResult.NotFound,ErrorType.AccountNotFound,userId);
+            return account;
+
         }
     }
 }

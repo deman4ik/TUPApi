@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using AutoMapper;
 using Microsoft.Azure.Mobile.Server.Config;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
 using tupapi.Shared.Enums.Auth;
 using tupapiService.Authentication;
+using tupapiService.DataObjects;
 using tupapiService.Helpers.CheckHelpers;
 using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;
@@ -16,47 +21,54 @@ using User = tupapiService.Models.User;
 namespace tupapiService.Controllers
 {
     [MobileAppController]
-    public class RegistrationController : ApiController
+    public class LoginController : ApiController
     {
-        private readonly ITupapiContext _context;
 
-        public RegistrationController()
+        private readonly ITupapiContext _context;
+        public LoginController()
         {
+            
             _context = new TupapiContext();
+
         }
 
-        public RegistrationController(ITupapiContext context)
+        public LoginController(ITupapiContext context)
         {
             _context = context;
+
         }
 
-        public HttpResponseMessage Registration(StandartAuthRequest request)
+        public HttpResponseMessage Login(StandartAuthRequest request)
         {
             try
             {
                 // Check request and request props is not null
                 CheckHelper.IsNull(request, "request");
-                CheckHelper.IsNull(request.Email, request.EmailPropertyName);
-                CheckHelper.IsNull(request.Name, request.NamePropertyName);
                 CheckHelper.IsNull(request.Password, request.PasswordPropertyName);
-                // We use lowercased User Names
-                request.Email = request.Email.ToLower();
-                request.Name = request.Name.ToLower();
-                // Validate request props
-                CheckHelper.EmailCheck(request.Email);
-                //TODO: Name check (starts with alphabetic symbols, may contain digits and only "_" special symbol allowed)
-                //CheckHelpers.NameCheck(request.Name);
-                CheckHelper.PasswordCheck(request.Password);
-                // Check if User Already Exist
-                CheckData.UserExist(_context, true, email: request.Email, name: request.Name);
+                // Find User
+                var user = CheckData.UserExist(_context, false, email: request.Email, name: request.Name);
+                if (user == null)
+                    throw new ApiException(ApiResult.Validation, ErrorType.UserWithEmailorNameNotFound, request.Email?? request.Name);
+                // Check if User is Blocked
+                CheckData.IsUserBlocked(_context, null, user);
+                // Check if User Account Exist
+                var account = CheckData.AccountExist(_context, Provider.Standart, user.Id);
+                // Check password
                 BaseAuth auth = new BaseAuth(_context);
-                User newUser = auth.CreateUser(Provider.Standart, request);
-                return Request.CreateResponse(HttpStatusCode.Created,
-                    new BaseResponse(ApiResult.Created, message: newUser.Id));
+                auth.CheckPassword(user,request.Password);
+                
+
+                    var token = auth.CreateToken(account.AccountId);
+                UserDTO userDto = Mapper.Map<User, UserDTO>(user);
+                // Generate AuthenticationToken
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new LoginResult(token,
+                        userDto));
+
             }
             catch (ApiException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                return Request.CreateResponse(HttpStatusCode.Unauthorized,
                     new BaseResponse(ex.ApiResult, ex.ErrorType, ex.Message));
             }
             catch (EntitySqlException ex)

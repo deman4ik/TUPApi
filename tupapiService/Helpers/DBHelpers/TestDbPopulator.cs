@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using tupapi.Shared.Enums.Auth;
 using tupapiService.Models;
 
 namespace tupapiService.Helpers.DBHelpers
@@ -13,6 +14,11 @@ namespace tupapiService.Helpers.DBHelpers
             _context = context;
         }
 
+        public void PopulateDb(int userAmount)
+        {
+            PopulateUsers(userAmount);
+            PopulateStandartAccounts(userAmount);
+        }
         public User GetUser(int numb)
         {
             var salt = AuthHelper.GenerateSalt();
@@ -46,6 +52,41 @@ namespace tupapiService.Helpers.DBHelpers
             foreach (var user in GetUsers(amount))
             {
                 _context.Users.Add(user);
+            }
+        }
+
+        public Account GetStandartAccount(int numb)
+        {
+            return new Account
+            {
+                Id = "ac" + numb,
+                CreatedAt = DateTimeOffset.Now.AddDays(-numb),
+                Deleted = false,
+                UserId = "u" + numb,
+                AccountId = Const.Standart + ":" + "u" + numb,
+                Provider = Provider.Standart,
+                ProviderId = "u" + numb
+            };
+        }
+
+        public List<Account> GetStandartAccounts(int amount)
+        {
+            List<Account> result = new List<Account>();
+
+            for (int i = 1; i <= amount; i++)
+            {
+                result.Add(
+                    GetStandartAccount(i)
+                    );
+            }
+            return result;
+        }
+
+        public void PopulateStandartAccounts(int amount)
+        {
+            foreach (var acc in GetStandartAccounts(amount))
+            {
+                _context.Accounts.Add(acc);
             }
         }
     }

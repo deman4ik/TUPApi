@@ -5,7 +5,7 @@ namespace tupapi.Shared.Interfaces
     /// <summary>
     ///     User Authentication Accounts
     /// </summary>
-    public interface IAccount
+    public interface IAccount : ITableData
     {
         /// <summary>
         ///     Unique Account ID (Provider code + unique identifier)

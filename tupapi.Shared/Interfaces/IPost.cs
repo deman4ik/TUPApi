@@ -5,7 +5,7 @@ namespace tupapi.Shared.Interfaces
     /// <summary>
     ///     Photo Post
     /// </summary>
-    public interface IPost
+    public interface IPost : ITableData
     {
         /// <summary>
         ///     User ID

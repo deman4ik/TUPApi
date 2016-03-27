@@ -9,23 +9,26 @@
         /// </summary>
         IsNull = 1,
 
-        /// <summary>
-        ///     An entity Not Found
-        /// </summary>
-        NotFound = 2,
 
         Internal = 3,
         //Login and Registration
         EmailInvalid = 100,
         EmailWrong = 101,
-        UserWithEmailExist = 102,
         NameInvalid = 103,
         NameWrong = 104,
-        UserWithNameExist = 105,
-        PasswordInvalid = 106,
-        PasswordLength = 107,
-        PasswordWrong = 108
+        PasswordInvalid = 108,
+        PasswordLength = 109,
+        PasswordWrong = 110,
 
         //User
+        UserWithEmailExist = 200,
+        UserWithNameExist = 201,
+        UserWithEmailorNameNotFound = 202,
+        UserNotFound = 203,
+        UserBlocked = 204,
+        UserNoPassword = 205,
+
+        //Account
+        AccountNotFound = 300,
     }
 }

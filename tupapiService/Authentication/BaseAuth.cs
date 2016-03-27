@@ -1,8 +1,16 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
+using System.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Web.Configuration;
+using Microsoft.Azure.Mobile.Server.Authentication;
+using Microsoft.Azure.Mobile.Server.Login;
 using tupapi.Shared.DataObjects;
+using tupapi.Shared.Enums;
 using tupapi.Shared.Enums.Auth;
 using tupapiService.Helpers;
+using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;
 using User = tupapiService.Models.User;
 
@@ -17,7 +25,7 @@ namespace tupapiService.Authentication
             _context = context;
         }
 
-        public User CreateUser(Provider provider, StandartRegistrationRequest request)
+        public User CreateUser(Provider provider, StandartAuthRequest request)
         {
             User newUser = null;
             string providerName = null;
@@ -67,6 +75,25 @@ namespace tupapiService.Authentication
                 Debug.WriteLine(ex.ToString());
                 throw;
             }
+        }
+
+        public void CheckPassword(User user, string password)
+        {
+            if (user.SaltedAndHashedPassword == null || user.Salt == null)
+                throw new ApiException(ApiResult.Validation, ErrorType.UserNoPassword, user.Id);
+            var pass = AuthHelper.Hash(password, user.Salt);
+            if (!AuthHelper.SlowEquals(pass, user.SaltedAndHashedPassword))
+                throw new ApiException(ApiResult.Denied, ErrorType.PasswordWrong, password);
+        }
+
+        public JwtSecurityToken CreateToken(string accountId)
+        {
+            return AppServiceLoginHandler.CreateToken(new Claim[] { new Claim(JwtRegisteredClaimNames.Sub, accountId) },
+              ConfigurationManager.AppSettings["SigningKey"],
+                 ConfigurationManager.AppSettings["ValidAudience"],
+                ConfigurationManager.AppSettings["ValidIssuer"],
+                TimeSpan.FromHours(24));
+           
         }
     }
 }

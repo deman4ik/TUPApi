@@ -2,7 +2,7 @@
 
 namespace tupapi.Shared.DataObjects
 {
-    public class StandartRegistrationRequest
+    public class StandartAuthRequest
     {
         #region Infrastructe
 
@@ -10,7 +10,7 @@ namespace tupapi.Shared.DataObjects
         [JsonIgnore] private const string name = "name";
         [JsonIgnore] private const string password = "password";
 
-        public StandartRegistrationRequest()
+        public StandartAuthRequest()
         {
             EmailPropertyName = email;
 

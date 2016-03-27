@@ -5,7 +5,7 @@ namespace tupapi.Shared.Interfaces
     /// <summary>
     ///     User
     /// </summary>
-    public interface IUser
+    public interface IUser : ITableData
     {
         /// <summary>
         ///     User Name

@@ -1,5 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.IdentityModel.Tokens;
+using System.Security.Cryptography;
 using System.Text;
+using System.Security.Claims;
+using Microsoft.Azure.Mobile.Server.Login;
+
 
 namespace tupapiService.Helpers
 {
@@ -32,5 +37,6 @@ namespace tupapiService.Helpers
             }
             return diff == 0;
         }
+
     }
 }
