@@ -84,7 +84,7 @@ namespace tupapiService.Test.Authentication
             Assert.AreEqual(result.IsSuccessStatusCode, false);
             Assert.AreEqual(result.ApiResult, ApiResult.Validation);
             Assert.AreEqual(result.ErrorType, ErrorType.IsNull);
-            Assert.AreEqual(result.ResponseMessage, req.EmailPropertyName);
+            Assert.AreEqual(result.ResponseMessage, nameof(req.Email));
         }
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace tupapiService.Test.Authentication
             Assert.AreEqual(result.IsSuccessStatusCode, false);
             Assert.AreEqual(result.ApiResult, ApiResult.Validation);
             Assert.AreEqual(result.ErrorType, ErrorType.IsNull);
-            Assert.AreEqual(result.ResponseMessage, req.NamePropertyName);
+            Assert.AreEqual(result.ResponseMessage, nameof(req.Name));
         }
 
         [TestMethod]
@@ -120,7 +120,7 @@ namespace tupapiService.Test.Authentication
             Assert.AreEqual(result.IsSuccessStatusCode, false);
             Assert.AreEqual(result.ApiResult, ApiResult.Validation);
             Assert.AreEqual(result.ErrorType, ErrorType.IsNull);
-            Assert.AreEqual(result.ResponseMessage, req.PasswordPropertyName);
+            Assert.AreEqual(result.ResponseMessage, nameof(req.Password));
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace tupapiService.Test.Authentication
         {
             var req = new StandartAuthRequest
             {
-                Email = "testtestru",
+                Email = "test@testru",
                 Name = "test",
                 Password = "abcdefghigklmpnop"
             };
@@ -148,7 +148,7 @@ namespace tupapiService.Test.Authentication
             var req = new StandartAuthRequest
             {
                 Email = "test@test.ru",
-                Name = "06test",
+                Name = "4deman4ik",
                 Password = "abcdefghigklmpnop"
             };
             HttpResponseMessage response = _controller.Registration(req);

@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 using tupapi.Shared.Interfaces;
+using tupapiService.DataObjects;
 
-namespace tupapi.Shared.DataObjects
+namespace tupapiService.Controllers
 {
     public class LoginResult : ILoginResult
     {
-        public LoginResult(string authenticationToken, User user)
+
+        public LoginResult(string authenticationToken, UserDTO user)
         {
             AuthenticationToken = authenticationToken;
             User = user;
         }
         public string AuthenticationToken { get; set; }
         public IUser User { get; set; }
-
-
     }
 }

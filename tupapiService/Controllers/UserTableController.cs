@@ -1,26 +1,47 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Entity.Core;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Web.Http.OData;
 using Microsoft.Azure.Mobile.Server;
+using tupapi.Shared.DataObjects;
+using tupapi.Shared.Enums;
+using tupapiService.Authentication;
 using tupapiService.DataObjects;
+using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Mapping;
 using tupapiService.Models;
 
 namespace tupapiService.Controllers
 {
+    [Authorize]
     public class UserTableController : TableController<UserDTO>
     {
         protected override void Initialize(HttpControllerContext controllerContext)
         {
-            base.Initialize(controllerContext);
-            TupapiContext context = new TupapiContext();
-            DomainManager = new UserDomainManager(context, Request, true);
+            try
+            {
+                base.Initialize(controllerContext);
+                TupapiContext context = new TupapiContext();
+                ClaimsPrincipal claimsPrincipal = this.User as ClaimsPrincipal;
+                string userId = BaseAuth.GetUserId(context, claimsPrincipal);
+                DomainManager = new UserDomainManager(context, Request, userId, true);
+            }
+            catch (Exception ex)
+            {
+                 Debug.WriteLine(ex.Message);
+            }
+
         }
 
-        public IQueryable<UserDTO> GetAllTodoItems()
+        public IQueryable<UserDTO> GetAllUsers()
         {
             return Query();
         }

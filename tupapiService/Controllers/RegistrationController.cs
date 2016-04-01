@@ -36,21 +36,20 @@ namespace tupapiService.Controllers
             {
                 // Check request and request props is not null
                 CheckHelper.IsNull(request, "request");
-                CheckHelper.IsNull(request.Email, request.EmailPropertyName);
-                CheckHelper.IsNull(request.Name, request.NamePropertyName);
-                CheckHelper.IsNull(request.Password, request.PasswordPropertyName);
+                CheckHelper.IsNull(request.Email, nameof(request.Email));
+                CheckHelper.IsNull(request.Name, nameof(request.Name));
+                CheckHelper.IsNull(request.Password, nameof(request.Password));
                 // We use lowercased User Names
                 request.Email = request.Email.ToLower();
                 request.Name = request.Name.ToLower();
                 // Validate request props
                 CheckHelper.EmailCheck(request.Email);
-                //TODO: Name check (starts with alphabetic symbols, may contain digits and only "_" special symbol allowed)
-                //CheckHelpers.NameCheck(request.Name);
+                
+                CheckHelper.NameCheck(request.Name);
                 CheckHelper.PasswordCheck(request.Password);
                 // Check if User Already Exist
                 CheckData.UserExist(_context, true, email: request.Email, name: request.Name);
-                BaseAuth auth = new BaseAuth(_context);
-                User newUser = auth.CreateUser(Provider.Standart, request);
+                User newUser = BaseAuth.CreateUser(_context, Provider.Standart, request);
                 return Request.CreateResponse(HttpStatusCode.Created,
                     new BaseResponse(ApiResult.Created, message: newUser.Id));
             }

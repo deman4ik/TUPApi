@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using tupapi.Shared.Enums;
 using tupapiService.Helpers.ExceptionHelpers;
 
@@ -20,19 +21,24 @@ namespace tupapiService.Helpers.CheckHelpers
             }
         }
 
+        private static bool IsNameValid(string name)
+        {
+            //TODO: Check this Regex
+            return Regex.IsMatch(name, Const.NameRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+
+        }
+
         private static bool IsEmailValid(string email)
         {
-            try
-            {
-                //TODO: Better Email check ( в данный момент не проверяется точка на конце ) 
-                var m = new MailAddress(email);
+            
+        return Regex.IsMatch(email, Const.EmailRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+              
+        }
 
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
+        public static void NameCheck(string name)
+        {
+            if (!IsNameValid(name))
+                throw new ApiException(ApiResult.Validation, ErrorType.NameInvalid, name);
         }
 
         public static void EmailCheck(string email)

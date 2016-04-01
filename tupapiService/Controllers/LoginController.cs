@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.Azure.Mobile.Server.Config;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
 using tupapi.Shared.Enums.Auth;
+using tupapi.Shared.Interfaces;
 using tupapiService.Authentication;
 using tupapiService.DataObjects;
 using tupapiService.Helpers.CheckHelpers;
@@ -25,17 +28,21 @@ namespace tupapiService.Controllers
     {
 
         private readonly ITupapiContext _context;
+        private readonly MapperConfiguration _config;
+        private readonly IMapper _mapper;
         public LoginController()
         {
             
             _context = new TupapiContext();
-
+            _config = Mapping.Mapping.GetConfiguration();
+            _mapper = _config.CreateMapper();
         }
 
         public LoginController(ITupapiContext context)
         {
             _context = context;
-
+            _config = Mapping.Mapping.GetConfiguration();
+            _mapper = _config.CreateMapper();
         }
 
         public HttpResponseMessage Login(StandartAuthRequest request)
@@ -43,8 +50,8 @@ namespace tupapiService.Controllers
             try
             {
                 // Check request and request props is not null
-                CheckHelper.IsNull(request, "request");
-                CheckHelper.IsNull(request.Password, request.PasswordPropertyName);
+                CheckHelper.IsNull(request, nameof(request));
+                CheckHelper.IsNull(request.Password, nameof(request.Password));
                 // Find User
                 var user = CheckData.UserExist(_context, false, email: request.Email, name: request.Name);
                 if (user == null)
@@ -54,12 +61,13 @@ namespace tupapiService.Controllers
                 // Check if User Account Exist
                 var account = CheckData.AccountExist(_context, Provider.Standart, user.Id);
                 // Check password
-                BaseAuth auth = new BaseAuth(_context);
-                auth.CheckPassword(user,request.Password);
+                BaseAuth.CheckPassword(user,request.Password);
                 
 
-                    var token = auth.CreateToken(account.AccountId);
-                UserDTO userDto = Mapper.Map<User, UserDTO>(user);
+                    var token = BaseAuth.CreateToken(account.AccountId);
+
+                UserDTO userDto = _mapper.Map<User, UserDTO>(user);
+
                 // Generate AuthenticationToken
                 return Request.CreateResponse(HttpStatusCode.OK,
                     new LoginResult(token,

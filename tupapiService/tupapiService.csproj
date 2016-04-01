@@ -203,11 +203,13 @@
     <Folder Include="Authentication\VK\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\CustomMobileAppHeaderFilter.cs" />
     <Compile Include="App_Start\Startup.MobileApp.cs" />
     <Compile Include="App_Start\Startup.Swagger.cs" />
     <Compile Include="Authentication\AccessToken.cs" />
     <Compile Include="Authentication\BaseAuth.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\LoginResult.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="Helpers\CheckHelpers\CheckHelper.cs" />
     <Compile Include="Helpers\SequentialGuid.cs" />
     <Compile Include="Mapping\GenericMappedEntityDomainManager.cs" />
+    <Compile Include="Mapping\Mapping.cs" />
     <Compile Include="Mapping\UserDomainManager.cs" />
     <Compile Include="Helpers\DBHelpers\DbValidationHelper.cs" />
     <Compile Include="Helpers\DBHelpers\EfStatus.cs" />

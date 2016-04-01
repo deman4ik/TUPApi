@@ -4,40 +4,14 @@ namespace tupapi.Shared.DataObjects
 {
     public class StandartAuthRequest
     {
-        #region Infrastructe
 
-        [JsonIgnore] private const string email = "email";
-        [JsonIgnore] private const string name = "name";
-        [JsonIgnore] private const string password = "password";
-
-        public StandartAuthRequest()
-        {
-            EmailPropertyName = email;
-
-            NamePropertyName = name;
-
-            PasswordPropertyName = password;
-        }
-
-
-        [JsonIgnore]
-        public string EmailPropertyName { get; }
-
-        [JsonIgnore]
-        public string NamePropertyName { get; }
-
-        [JsonIgnore]
-        public string PasswordPropertyName { get; }
-
-        #endregion
-
-        [JsonProperty(PropertyName = email)]
+        [JsonProperty(PropertyName = nameof(Email))]
         public string Email { get; set; }
 
-        [JsonProperty(PropertyName = name)]
+        [JsonProperty(PropertyName = nameof(Name))]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = password)]
+        [JsonProperty(PropertyName = nameof(Password))]
         public string Password { get; set; }
     }
 }

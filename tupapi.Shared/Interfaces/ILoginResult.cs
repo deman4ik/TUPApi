@@ -4,12 +4,13 @@ using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using tupapi.Shared.DataObjects;
 
 namespace tupapi.Shared.Interfaces
 {
     public interface ILoginResult
     {
-        JwtSecurityToken AuthenticationToken { get; }
+        string AuthenticationToken { get; }
         IUser User { get; }
     }
 }

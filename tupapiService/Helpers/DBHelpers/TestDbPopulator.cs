@@ -30,7 +30,8 @@ namespace tupapiService.Helpers.DBHelpers
                 Email = "user" + numb + "@example.com",
                 Name = "user" + numb,
                 Salt = salt,
-                SaltedAndHashedPassword = AuthHelper.Hash("user" + numb + "pwd", salt)
+                SaltedAndHashedPassword = AuthHelper.Hash("user" + numb + "pwd", salt),
+                IsBlocked = numb == 2 //  only for "u2"
             };
         }
 

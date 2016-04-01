@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Diagnostics;
 using System.IdentityModel.Tokens;
+using System.Linq;
 using System.Security.Claims;
 using System.Web.Configuration;
 using Microsoft.Azure.Mobile.Server.Authentication;
@@ -16,16 +17,11 @@ using User = tupapiService.Models.User;
 
 namespace tupapiService.Authentication
 {
-    public class BaseAuth
+    public static class BaseAuth
     {
-        private readonly ITupapiContext _context;
 
-        public BaseAuth(ITupapiContext context)
-        {
-            _context = context;
-        }
 
-        public User CreateUser(Provider provider, StandartAuthRequest request)
+        public static User CreateUser(ITupapiContext context, Provider provider, StandartAuthRequest request)
         {
             User newUser = null;
             string providerName = null;
@@ -47,13 +43,13 @@ namespace tupapiService.Authentication
                 providerId = newUser.Id;
             }
 
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
-            CreateAccount(provider, providerName, newUser.Id, providerId);
+            context.Users.Add(newUser);
+            context.SaveChanges();
+            CreateAccount(context, provider, providerName, newUser.Id, providerId);
             return newUser;
         }
 
-        public void CreateAccount(Provider provider, string providerName, string userId, string providerId,
+        public static void CreateAccount(ITupapiContext context, Provider provider, string providerName, string userId, string providerId,
             string accesstoken = null)
         {
             try
@@ -67,8 +63,8 @@ namespace tupapiService.Authentication
                     ProviderId = providerId,
                     AccessToken = accesstoken
                 };
-                _context.Accounts.Add(newAccount);
-                _context.SaveChanges();
+                context.Accounts.Add(newAccount);
+                context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -77,7 +73,7 @@ namespace tupapiService.Authentication
             }
         }
 
-        public void CheckPassword(User user, string password)
+        public static void CheckPassword(User user, string password)
         {
             if (user.SaltedAndHashedPassword == null || user.Salt == null)
                 throw new ApiException(ApiResult.Validation, ErrorType.UserNoPassword, user.Id);
@@ -86,14 +82,36 @@ namespace tupapiService.Authentication
                 throw new ApiException(ApiResult.Denied, ErrorType.PasswordWrong, password);
         }
 
-        public JwtSecurityToken CreateToken(string accountId)
+        public static string CreateToken(string accountId)
         {
-            return AppServiceLoginHandler.CreateToken(new Claim[] { new Claim(JwtRegisteredClaimNames.Sub, accountId) },
+           var token =  AppServiceLoginHandler.CreateToken(new Claim[] { new Claim(JwtRegisteredClaimNames.Sub, accountId) },
               ConfigurationManager.AppSettings["SigningKey"],
                  ConfigurationManager.AppSettings["ValidAudience"],
                 ConfigurationManager.AppSettings["ValidIssuer"],
                 TimeSpan.FromHours(24));
-           
+
+            return token.RawData;
+
+
+        }
+        public static string GetUserId(ITupapiContext context, ClaimsPrincipal claimsPrincipal)
+        {
+            if (claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier) == null)
+                throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound,null);
+            string accountId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var account = context.Accounts.AsNoTracking().SingleOrDefault(a => a.AccountId == accountId);
+            if (account == null)
+                throw new ApiException(ApiResult.Denied, ErrorType.AccountNotFound, accountId);
+            return account.UserId;
+        }
+
+        public static User GetUser(ITupapiContext context, ClaimsPrincipal claimsPrincipal)
+        {
+            string userId = GetUserId(context, claimsPrincipal);
+            var user = context.Users.AsNoTracking().SingleOrDefault(u => u.Id == userId);
+            if (user == null)
+                throw new ApiException(ApiResult.Denied,ErrorType.UserNotFound, userId);
+            return user;
         }
     }
 }

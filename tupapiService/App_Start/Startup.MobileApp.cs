@@ -28,18 +28,8 @@ namespace tupapiService
                 .UseDefaultConfiguration()
                 //  .MapLegacyCrossDomainController()
                 .ApplyTo(config);
+          
 
-            Mapper.Initialize(cfg =>
-            {
-                // UserDTO Mapping
-                cfg.CreateMap<User, UserDTO>();
-                cfg.CreateMap<UserDTO, User>();
-                // PostDTO Mapping
-                cfg.CreateMap<Post, PostDTO>()
-                    .ForMember(dst => dst.UserName, map => map.MapFrom(src => src.User.Name))
-                    .ForMember(dst => dst.Likes, map => map.MapFrom(src => src.Votes.Count(v => v.Type == VoteType.Up)));
-                cfg.CreateMap<PostDTO, Post>();
-            });
             // Use Entity Framework Code First to create database tables based on your DbContext
             Database.SetInitializer(new TupapiInitializer());
 

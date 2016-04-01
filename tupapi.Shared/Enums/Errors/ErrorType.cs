@@ -30,5 +30,9 @@
 
         //Account
         AccountNotFound = 300,
+
+        //Authorization
+        NotOwner = 400,
+        ClaimNotFound = 401,
     }
 }

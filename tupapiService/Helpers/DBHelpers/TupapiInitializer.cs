@@ -7,25 +7,14 @@ using tupapiService.Models;
 
 namespace tupapiService.Helpers.DBHelpers
 {
-    public class TupapiInitializer : DropCreateDatabaseIfModelChanges<TupapiContext>
+    public class TupapiInitializer : DropCreateDatabaseAlways<TupapiContext>
     {
         protected override void Seed(TupapiContext context)
         {
             try
             {
-                var data = new DataGenerator();
-                foreach (var user in data.Users)
-                {
-                    context.Users.Add(new User
-                    {
-                        Id = user.Id,
-                        Email = user.Email,
-                        Name = user.Name,
-                        IsBlocked = user.IsBlocked,
-                        Type = user.Type
-                    });
-                }
-
+                var dbpop = new TestDbPopulator(context);
+                dbpop.PopulateDb(10);
                 context.SaveChanges();
                 base.Seed(context);
             }
