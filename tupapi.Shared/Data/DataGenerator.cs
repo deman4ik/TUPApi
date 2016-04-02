@@ -7,9 +7,6 @@ namespace tupapi.Shared.Data
 {
     public class DataGenerator
     {
-        public List<User> Users { get; set; }
-        public List<Post> Posts { get; set; }
-
         public DataGenerator(int usersAmount = 10, int postsAmount = 10)
         {
             Users = new List<User>();
@@ -17,6 +14,9 @@ namespace tupapi.Shared.Data
             GenerateUsers(usersAmount);
             GeneratePosts(postsAmount);
         }
+
+        public List<User> Users { get; set; }
+        public List<Post> Posts { get; set; }
 
         public void GenerateUsers(int amount)
         {
@@ -38,7 +38,7 @@ namespace tupapi.Shared.Data
 
         public void GeneratePosts(int amount)
         {
-            Random rnd = new Random();
+            var rnd = new Random();
             foreach (var user in Users)
             {
                 Posts.Add(new Post

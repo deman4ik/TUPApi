@@ -11,7 +11,6 @@ using tupapiService.Authentication;
 using tupapiService.Helpers.CheckHelpers;
 using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;
-using User = tupapiService.Models.User;
 
 namespace tupapiService.Controllers
 {
@@ -44,12 +43,12 @@ namespace tupapiService.Controllers
                 request.Name = request.Name.ToLower();
                 // Validate request props
                 CheckHelper.EmailCheck(request.Email);
-                
+
                 CheckHelper.NameCheck(request.Name);
                 CheckHelper.PasswordCheck(request.Password);
                 // Check if User Already Exist
                 CheckData.UserExist(_context, true, email: request.Email, name: request.Name);
-                User newUser = BaseAuth.CreateUser(_context, Provider.Standart, request);
+                var newUser = BaseAuth.CreateUser(_context, Provider.Standart, request);
                 return Request.CreateResponse(HttpStatusCode.Created,
                     new BaseResponse(ApiResult.Created, message: newUser.Id));
             }

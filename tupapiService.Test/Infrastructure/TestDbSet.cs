@@ -1,21 +1,53 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace tupapiService.Test.Infrastructure
 {
     public class TestDbSet<T> : DbSet<T>, IQueryable, IEnumerable<T>
         where T : class
     {
-        private ObservableCollection<T> _data;
-        private IQueryable _query;
+        private readonly ObservableCollection<T> _data;
+        private readonly IQueryable _query;
 
         public TestDbSet()
         {
             _data = new ObservableCollection<T>();
             _query = _data.AsQueryable();
+        }
+
+        public override ObservableCollection<T> Local
+        {
+            get { return new ObservableCollection<T>(_data); }
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return _data.GetEnumerator();
+        }
+
+        Type IQueryable.ElementType
+        {
+            get { return _query.ElementType; }
+        }
+
+        Expression IQueryable.Expression
+        {
+            get { return _query.Expression; }
+        }
+
+        IQueryProvider IQueryable.Provider
+        {
+            get { return _query.Provider; }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _data.GetEnumerator();
         }
 
         public override T Add(T item)
@@ -44,36 +76,6 @@ namespace tupapiService.Test.Infrastructure
         public override TDerivedEntity Create<TDerivedEntity>()
         {
             return Activator.CreateInstance<TDerivedEntity>();
-        }
-
-        public override ObservableCollection<T> Local
-        {
-            get { return new ObservableCollection<T>(_data); }
-        }
-
-        Type IQueryable.ElementType
-        {
-            get { return _query.ElementType; }
-        }
-
-        System.Linq.Expressions.Expression IQueryable.Expression
-        {
-            get { return _query.Expression; }
-        }
-
-        IQueryProvider IQueryable.Provider
-        {
-            get { return _query.Provider; }
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return _data.GetEnumerator();
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return _data.GetEnumerator();
         }
     }
 }

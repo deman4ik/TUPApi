@@ -1,18 +1,42 @@
 ﻿using System;
 using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Hosting;
 using Newtonsoft.Json;
 using tupapi.Shared.DataObjects;
+using tupapiService.Controllers;
+using tupapiService.Models;
+using LoginResult = tupapiService.Controllers.LoginResult;
 
 namespace tupapiService.Test.Infrastructure
 {
     public class TestHelper
     {
         /// <summary>
-        ///     Desitialize Controller Response
+        /// Provide Standart Authentication
+        /// </summary>
+        /// <param name="context">ITupapiContext</param>
+        /// <param name="req">Creds</param>
+        /// <returns></returns>
+        public static LoginResult Authenticate(ITupapiContext context, StandartAuthRequest req)
+        {
+            var config = new HttpConfiguration();
+            LoginController controller = new LoginController(context)
+            {
+                Request = new HttpRequestMessage()
+            };
+            controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
+
+            HttpResponseMessage response = controller.Login(req);
+            return ParseLoginResponse(response);
+        }
+
+        /// <summary>
+        ///     Desitialize Controller Base Response
         /// </summary>
         /// <param name="response">Base Controller Response</param>
         /// <returns></returns>
-        public static ControllerResult ParseResponse(HttpResponseMessage response)
+        public static ControllerResult ParseBaseResponse(HttpResponseMessage response)
         {
             if (response == null)
             {
@@ -29,15 +53,15 @@ namespace tupapiService.Test.Infrastructure
                 ErrorType = result.ErrorType,
                 ResponseMessage = result.Message
             };
-            Log(controllerResult);
+            LogBaseResponse(controllerResult);
             return controllerResult;
         }
 
         /// <summary>
-        ///     Log response to Console
+        ///     Log Base Response to Console
         /// </summary>
         /// <param name="result"></param>
-        public static void Log(ControllerResult result)
+        public static void LogBaseResponse(ControllerResult result)
         {
             Console.WriteLine("# Status Code:");
             Console.WriteLine(result.StatusCode);
@@ -53,6 +77,30 @@ namespace tupapiService.Test.Infrastructure
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("# Response Message:");
             Console.WriteLine(result.ResponseMessage);
+        }
+
+        public static LoginResult ParseLoginResponse(HttpResponseMessage response)
+        {
+            if (response == null)
+            {
+                Console.WriteLine("HttpResponseMessage is NULL");
+                return null;
+            }
+            var result = JsonConvert.DeserializeObject<LoginResult>(response.Content.ReadAsStringAsync().Result);
+            if (result != null)
+            {
+                LogLoginResult(result);
+            }
+            return result;
+        }
+
+        public static void LogLoginResult(LoginResult result)
+        {
+            Console.WriteLine("# Authentication Token:");
+            Console.WriteLine(result.AuthenticationToken);
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine("# User Id:");
+            Console.WriteLine(result.User.Id);
         }
     }
 }

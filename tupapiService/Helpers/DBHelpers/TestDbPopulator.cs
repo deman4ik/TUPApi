@@ -19,6 +19,7 @@ namespace tupapiService.Helpers.DBHelpers
             PopulateUsers(userAmount);
             PopulateStandartAccounts(userAmount);
         }
+
         public User GetUser(int numb)
         {
             var salt = AuthHelper.GenerateSalt();
@@ -37,9 +38,9 @@ namespace tupapiService.Helpers.DBHelpers
 
         public List<User> GetUsers(int amount)
         {
-            List<User> result = new List<User>();
+            var result = new List<User>();
 
-            for (int i = 1; i <= amount; i++)
+            for (var i = 1; i <= amount; i++)
             {
                 result.Add(
                     GetUser(i)
@@ -72,9 +73,9 @@ namespace tupapiService.Helpers.DBHelpers
 
         public List<Account> GetStandartAccounts(int amount)
         {
-            List<Account> result = new List<Account>();
+            var result = new List<Account>();
 
-            for (int i = 1; i <= amount; i++)
+            for (var i = 1; i <= amount; i++)
             {
                 result.Add(
                     GetStandartAccount(i)

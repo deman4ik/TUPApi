@@ -33,6 +33,6 @@
 
         //Authorization
         NotOwner = 400,
-        ClaimNotFound = 401,
+        ClaimNotFound = 401
     }
 }

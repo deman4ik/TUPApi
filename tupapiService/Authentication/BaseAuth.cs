@@ -19,8 +19,6 @@ namespace tupapiService.Authentication
 {
     public static class BaseAuth
     {
-
-
         public static User CreateUser(ITupapiContext context, Provider provider, StandartAuthRequest request)
         {
             User newUser = null;
@@ -49,7 +47,8 @@ namespace tupapiService.Authentication
             return newUser;
         }
 
-        public static void CreateAccount(ITupapiContext context, Provider provider, string providerName, string userId, string providerId,
+        public static void CreateAccount(ITupapiContext context, Provider provider, string providerName, string userId,
+            string providerId,
             string accesstoken = null)
         {
             try
@@ -84,20 +83,20 @@ namespace tupapiService.Authentication
 
         public static string CreateToken(string accountId)
         {
-           var token =  AppServiceLoginHandler.CreateToken(new Claim[] { new Claim(JwtRegisteredClaimNames.Sub, accountId) },
-              ConfigurationManager.AppSettings["SigningKey"],
-                 ConfigurationManager.AppSettings["ValidAudience"],
-                ConfigurationManager.AppSettings["ValidIssuer"],
-                TimeSpan.FromHours(24));
+            var token =
+                AppServiceLoginHandler.CreateToken(new Claim[] {new Claim(JwtRegisteredClaimNames.Sub, accountId)},
+                    ConfigurationManager.AppSettings["SigningKey"],
+                    ConfigurationManager.AppSettings["ValidAudience"],
+                    ConfigurationManager.AppSettings["ValidIssuer"],
+                    TimeSpan.FromHours(24));
 
             return token.RawData;
-
-
         }
+
         public static string GetUserId(ITupapiContext context, ClaimsPrincipal claimsPrincipal)
         {
             if (claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier) == null)
-                throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound,null);
+                throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound, null);
             string accountId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
             var account = context.Accounts.AsNoTracking().SingleOrDefault(a => a.AccountId == accountId);
             if (account == null)
@@ -110,7 +109,7 @@ namespace tupapiService.Authentication
             string userId = GetUserId(context, claimsPrincipal);
             var user = context.Users.AsNoTracking().SingleOrDefault(u => u.Id == userId);
             if (user == null)
-                throw new ApiException(ApiResult.Denied,ErrorType.UserNotFound, userId);
+                throw new ApiException(ApiResult.Denied, ErrorType.UserNotFound, userId);
             return user;
         }
     }

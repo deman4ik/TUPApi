@@ -41,12 +41,12 @@
         Sql = 6,
 
         /// <summary>
-        /// Access Denied
+        ///     Access Denied
         /// </summary>
         Denied = 7,
 
         /// <summary>
-        /// Unauthenticated
+        ///     Unauthenticated
         /// </summary>
         Unauth = 8,
 
@@ -54,6 +54,6 @@
         /// <summary>
         ///     An entity Not Found
         /// </summary>
-        NotFound = 9,
+        NotFound = 9
     }
 }

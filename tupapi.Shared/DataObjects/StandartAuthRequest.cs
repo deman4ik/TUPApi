@@ -4,7 +4,6 @@ namespace tupapi.Shared.DataObjects
 {
     public class StandartAuthRequest
     {
-
         [JsonProperty(PropertyName = nameof(Email))]
         public string Email { get; set; }
 

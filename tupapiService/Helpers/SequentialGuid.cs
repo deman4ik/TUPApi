@@ -6,12 +6,13 @@ namespace tupapiService.Helpers
 {
     public class SequentialGuid
     {
-        public DateTime SequenceStartDate { get; private set; }
-        public DateTime SequenceEndDate { get; private set; }
-
         private const int NumberOfBytes = 6;
         private const int PermutationsOfAByte = 256;
+
+        private static readonly Lazy<SequentialGuid> InstanceField = new Lazy<SequentialGuid>(() => new SequentialGuid());
         private readonly long _maximumPermutations = (long) Math.Pow(PermutationsOfAByte, NumberOfBytes);
+
+        private readonly object _synchronizationObject = new object();
         private long _lastSequence;
 
         public SequentialGuid(DateTime sequenceStartDate, DateTime sequenceEndDate)
@@ -25,16 +26,12 @@ namespace tupapiService.Helpers
         {
         }
 
-        private static readonly Lazy<SequentialGuid> InstanceField = new Lazy<SequentialGuid>(() => new SequentialGuid());
+        public DateTime SequenceStartDate { get; }
+        public DateTime SequenceEndDate { get; }
 
         internal static SequentialGuid Instance
         {
             get { return InstanceField.Value; }
-        }
-
-        public static Guid NewGuid()
-        {
-            return Instance.GetGuid();
         }
 
         public TimeSpan TimePerSequence
@@ -56,10 +53,15 @@ namespace tupapiService.Helpers
             }
         }
 
+        public static Guid NewGuid()
+        {
+            return Instance.GetGuid();
+        }
+
         private long GetCurrentSequence(DateTime value)
         {
             var ticksUntilNow = value.Ticks - SequenceStartDate.Ticks;
-            var result = ((decimal) ticksUntilNow/TotalPeriod.Ticks*_maximumPermutations);
+            var result = (decimal) ticksUntilNow/TotalPeriod.Ticks*_maximumPermutations;
             return (long) result;
         }
 
@@ -67,8 +69,6 @@ namespace tupapiService.Helpers
         {
             return GetGuid(DateTime.Now);
         }
-
-        private readonly object _synchronizationObject = new object();
 
         internal Guid GetGuid(DateTime now)
         {

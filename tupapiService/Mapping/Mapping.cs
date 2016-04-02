@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using AutoMapper;
 using tupapi.Shared.Enums;
 using tupapiService.DataObjects;
@@ -13,7 +10,8 @@ namespace tupapiService.Mapping
     {
         public static MapperConfiguration GetConfiguration()
         {
-            return new MapperConfiguration(cfg => {
+            return new MapperConfiguration(cfg =>
+            {
                 // UserDTO Mapping
                 cfg.CreateMap<User, UserDTO>();
                 cfg.CreateMap<UserDTO, User>();

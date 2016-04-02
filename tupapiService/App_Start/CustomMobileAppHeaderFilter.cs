@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Web;
 using System.Web.Http.Description;
-using System.Web.Http.Filters;
-using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Config;
 using Swashbuckle.Swagger;
 
@@ -25,8 +21,8 @@ namespace tupapiService.App_Start
                 throw new ArgumentNullException(nameof(apiDescription));
             }
 
-            Collection<IFilter> filters = apiDescription.ActionDescriptor.ControllerDescriptor.GetFilters();
-            IEnumerable<IFilter> mobileAppFilter = filters.Where(f => f is MobileAppControllerAttribute);
+            var filters = apiDescription.ActionDescriptor.ControllerDescriptor.GetFilters();
+            var mobileAppFilter = filters.Where(f => f is MobileAppControllerAttribute);
 
             if (mobileAppFilter.Any())
             {

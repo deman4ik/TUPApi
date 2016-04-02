@@ -7,7 +7,7 @@ using tupapiService.Models;
 
 namespace tupapiService.Helpers.DBHelpers
 {
-    public class TupapiInitializer : DropCreateDatabaseAlways<TupapiContext>
+    public class TupapiInitializer : DropCreateDatabaseIfModelChanges<TupapiContext>
     {
         protected override void Seed(TupapiContext context)
         {

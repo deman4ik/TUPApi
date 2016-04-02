@@ -1,16 +1,10 @@
 ﻿using System.Configuration;
 using System.Data.Entity;
-using System.Linq;
 using System.Web.Http;
-using AutoMapper;
-using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Authentication;
 using Microsoft.Azure.Mobile.Server.Config;
 using Owin;
-using tupapi.Shared.Enums;
-using tupapiService.DataObjects;
 using tupapiService.Helpers.DBHelpers;
-using tupapiService.Models;
 
 namespace tupapiService
 {
@@ -18,7 +12,7 @@ namespace tupapiService
     {
         public static void ConfigureMobileApp(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
 
             //For more information on Web API tracing, see http://go.microsoft.com/fwlink/?LinkId=620686 
             config.EnableSystemDiagnosticsTracing();
@@ -28,7 +22,7 @@ namespace tupapiService
                 .UseDefaultConfiguration()
                 //  .MapLegacyCrossDomainController()
                 .ApplyTo(config);
-          
+
 
             // Use Entity Framework Code First to create database tables based on your DbContext
             Database.SetInitializer(new TupapiInitializer());
@@ -36,7 +30,7 @@ namespace tupapiService
             // To prevent Entity Framework from modifying your database schema, use a null database initializer
             //Database.SetInitializer<TupapiContext>(null);
 
-            MobileAppSettingsDictionary settings = config.GetMobileAppSettingsProvider().GetMobileAppSettings();
+            var settings = config.GetMobileAppSettingsProvider().GetMobileAppSettings();
 
             if (string.IsNullOrEmpty(settings.HostName))
             {

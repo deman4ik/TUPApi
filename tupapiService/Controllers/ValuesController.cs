@@ -1,6 +1,4 @@
 ﻿using System.Web.Http;
-using System.Web.Http.Tracing;
-using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Config;
 
 namespace tupapiService.Controllers
@@ -13,11 +11,11 @@ namespace tupapiService.Controllers
         // GET api/values
         public string Get()
         {
-            MobileAppSettingsDictionary settings = Configuration.GetMobileAppSettingsProvider().GetMobileAppSettings();
-            ITraceWriter traceWriter = Configuration.Services.GetTraceWriter();
+            var settings = Configuration.GetMobileAppSettingsProvider().GetMobileAppSettings();
+            var traceWriter = Configuration.Services.GetTraceWriter();
 
-            string host = settings.HostName ?? "localhost";
-            string greeting = "Hello from " + host;
+            var host = settings.HostName ?? "localhost";
+            var greeting = "Hello from " + host;
 
             traceWriter.Info(greeting);
             return greeting;

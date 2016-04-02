@@ -4,12 +4,12 @@ namespace tupapiService.Authentication
 {
     public class AccessToken
     {
-        [JsonProperty("access_token")]
-        public string Token { get; set; }
-
         public AccessToken(string token)
         {
             Token = token;
         }
+
+        [JsonProperty("access_token")]
+        public string Token { get; set; }
     }
 }

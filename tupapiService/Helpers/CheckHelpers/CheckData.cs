@@ -40,7 +40,7 @@ namespace tupapiService.Helpers.CheckHelpers
                     throw new ApiException(ApiResult.Validation, ErrorType.UserWithNameExist, name);
             }
 
-            
+
             return user;
         }
 
@@ -59,9 +59,8 @@ namespace tupapiService.Helpers.CheckHelpers
         {
             var account = context.Accounts.SingleOrDefault(a => a.UserId == userId && a.Provider == provider);
             if (account == null)
-                throw new ApiException(ApiResult.NotFound,ErrorType.AccountNotFound,userId);
+                throw new ApiException(ApiResult.NotFound, ErrorType.AccountNotFound, userId);
             return account;
-
         }
     }
 }

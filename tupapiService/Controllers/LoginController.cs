@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Core;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.Azure.Mobile.Server.Config;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
 using tupapi.Shared.Enums.Auth;
-using tupapi.Shared.Interfaces;
 using tupapiService.Authentication;
 using tupapiService.DataObjects;
 using tupapiService.Helpers.CheckHelpers;
@@ -26,13 +20,13 @@ namespace tupapiService.Controllers
     [MobileAppController]
     public class LoginController : ApiController
     {
+        private readonly MapperConfiguration _config;
 
         private readonly ITupapiContext _context;
-        private readonly MapperConfiguration _config;
         private readonly IMapper _mapper;
+
         public LoginController()
         {
-            
             _context = new TupapiContext();
             _config = Mapping.Mapping.GetConfiguration();
             _mapper = _config.CreateMapper();
@@ -55,24 +49,24 @@ namespace tupapiService.Controllers
                 // Find User
                 var user = CheckData.UserExist(_context, false, email: request.Email, name: request.Name);
                 if (user == null)
-                    throw new ApiException(ApiResult.Validation, ErrorType.UserWithEmailorNameNotFound, request.Email?? request.Name);
+                    throw new ApiException(ApiResult.Validation, ErrorType.UserWithEmailorNameNotFound,
+                        request.Email ?? request.Name);
                 // Check if User is Blocked
                 CheckData.IsUserBlocked(_context, null, user);
                 // Check if User Account Exist
                 var account = CheckData.AccountExist(_context, Provider.Standart, user.Id);
                 // Check password
-                BaseAuth.CheckPassword(user,request.Password);
-                
+                BaseAuth.CheckPassword(user, request.Password);
 
-                    var token = BaseAuth.CreateToken(account.AccountId);
 
-                UserDTO userDto = _mapper.Map<User, UserDTO>(user);
+                var token = BaseAuth.CreateToken(account.AccountId);
+
+                var userDto = _mapper.Map<User, UserDTO>(user);
 
                 // Generate AuthenticationToken
                 return Request.CreateResponse(HttpStatusCode.OK,
                     new LoginResult(token,
                         userDto));
-
             }
             catch (ApiException ex)
             {

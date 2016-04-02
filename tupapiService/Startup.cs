@@ -1,7 +1,8 @@
 using Microsoft.Owin;
 using Owin;
+using tupapiService;
 
-[assembly: OwinStartup(typeof (tupapiService.Startup))]
+[assembly: OwinStartup(typeof (Startup))]
 
 namespace tupapiService
 {

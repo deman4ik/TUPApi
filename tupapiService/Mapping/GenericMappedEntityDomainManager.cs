@@ -18,26 +18,28 @@ namespace tupapiService.Mapping
     {
         protected readonly MapperConfiguration _config;
         protected readonly string _userId;
+
         public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request, string userId)
             : base(context, request)
         {
-           // Request = request;
+            // Request = request;
             _userId = userId;
             _config = Mapping.GetConfiguration();
         }
 
-        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request, string userId, bool enableSoftDelete)
+        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request, string userId,
+            bool enableSoftDelete)
             : base(context, request, enableSoftDelete)
         {
-           // Request = request;
+            // Request = request;
             _userId = userId;
-           // EnableSoftDelete = enableSoftDelete;
+            // EnableSoftDelete = enableSoftDelete;
             _config = Mapping.GetConfiguration();
         }
 
         public override IQueryable<TData> Query()
         {
-            IQueryable<TData> query = Context.Set<TModel>().ProjectTo<TData>(_config);
+            var query = Context.Set<TModel>().ProjectTo<TData>(_config);
             query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return query;
         }
@@ -48,7 +50,7 @@ namespace tupapiService.Mapping
             {
                 throw new ArgumentNullException("id");
             }
-            IQueryable<TData> query = Context.Set<TModel>().Where(item => item.Id == id).ProjectTo<TData>(_config);
+            var query = Context.Set<TModel>().Where(item => item.Id == id).ProjectTo<TData>(_config);
             query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return SingleResult.Create(query);
         }

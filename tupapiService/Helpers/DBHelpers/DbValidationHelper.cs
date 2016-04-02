@@ -18,7 +18,7 @@ namespace tupapiService.Helpers.DBHelpers
                 (entityEntry.State == EntityState.Added
                  || entityEntry.State == EntityState.Modified))
             {
-                var accountToCheck = ((Account) entityEntry.Entity);
+                var accountToCheck = (Account) entityEntry.Entity;
 
                 //check for uniqueness of Account ID for User
                 if (

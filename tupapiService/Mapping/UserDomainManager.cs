@@ -15,7 +15,8 @@ namespace tupapiService.Mapping
 {
     public class UserDomainManager : GenericMappedEntityDomainManager<UserDTO, User>
     {
-        public UserDomainManager(TupapiContext context, HttpRequestMessage request, string userId) : base(context, request, userId)
+        public UserDomainManager(TupapiContext context, HttpRequestMessage request, string userId)
+            : base(context, request, userId)
         {
         }
 
@@ -26,7 +27,7 @@ namespace tupapiService.Mapping
 
         public override IQueryable<UserDTO> Query()
         {
-            IQueryable<UserDTO> query = Context.Set<User>().Where(u => u.Id == _userId).ProjectTo<UserDTO>(this._config);
+            var query = Context.Set<User>().Where(u => u.Id == _userId).ProjectTo<UserDTO>(_config);
             query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return query;
         }
@@ -39,9 +40,9 @@ namespace tupapiService.Mapping
             }
             if (id != _userId)
             {
-                throw new ApiException(ApiResult.Denied,ErrorType.NotOwner,id);
+                throw new ApiException(ApiResult.Denied, ErrorType.NotOwner, id);
             }
-            IQueryable<UserDTO> query = Context.Set<User>().Where(item => item.Id == _userId).ProjectTo<UserDTO>(_config);
+            var query = Context.Set<User>().Where(item => item.Id == _userId).ProjectTo<UserDTO>(_config);
             query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return SingleResult.Create(query);
         }
