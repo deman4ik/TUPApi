@@ -17,22 +17,19 @@ namespace tupapiService.Mapping
         where TModel : class, ITableData
     {
         protected readonly MapperConfiguration _config;
-        protected readonly string _userId;
 
-        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request, string userId)
+        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request)
             : base(context, request)
         {
             // Request = request;
-            _userId = userId;
             _config = Mapping.GetConfiguration();
         }
 
-        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request, string userId,
+        public GenericMappedEntityDomainManager(TupapiContext context, HttpRequestMessage request,
             bool enableSoftDelete)
             : base(context, request, enableSoftDelete)
         {
             // Request = request;
-            _userId = userId;
             // EnableSoftDelete = enableSoftDelete;
             _config = Mapping.GetConfiguration();
         }

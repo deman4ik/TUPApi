@@ -45,7 +45,6 @@ namespace tupapiService.Controllers
                 var claimsPrincipal = this.User as ClaimsPrincipal;
                 Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Debug.WriteLine(this.Request.Headers.ToString());
-  
                 foreach (var c in claimsPrincipal.Claims)
                 {
                     Debug.WriteLine(c.ToString());
