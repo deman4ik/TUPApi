@@ -93,20 +93,16 @@ namespace tupapiService.Authentication
             return token.RawData;
         }
 
-        public static string GetUserId(ITupapiContext context, ClaimsPrincipal claimsPrincipal)
+        public static string GetUserId(ClaimsPrincipal claimsPrincipal)
         {
             if (claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier) == null)
                 throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound, null);
-            string accountId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var account = context.Accounts.AsNoTracking().SingleOrDefault(a => a.AccountId == accountId);
-            if (account == null)
-                throw new ApiException(ApiResult.Denied, ErrorType.AccountNotFound, accountId);
-            return account.UserId;
+            return claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
         public static User GetUser(ITupapiContext context, ClaimsPrincipal claimsPrincipal)
         {
-            string userId = GetUserId(context, claimsPrincipal);
+            string userId = GetUserId(claimsPrincipal);
             var user = context.Users.AsNoTracking().SingleOrDefault(u => u.Id == userId);
             if (user == null)
                 throw new ApiException(ApiResult.Denied, ErrorType.UserNotFound, userId);

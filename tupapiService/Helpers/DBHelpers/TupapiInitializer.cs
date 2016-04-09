@@ -14,7 +14,7 @@ namespace tupapiService.Helpers.DBHelpers
             try
             {
                 var dbpop = new TestDbPopulator(context);
-                dbpop.PopulateDb(10);
+                dbpop.PopulateDb(10,5);
                 context.SaveChanges();
                 base.Seed(context);
             }

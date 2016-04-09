@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
@@ -23,7 +24,7 @@ namespace tupapiService.Test.Controllers
     [TestClass]
     public class UserControllerTest : BaseControllerTest
     {
-        private UserController _controller;
+        private UserApiController _controller;
         private User _user;
 
         [TestInitialize]
@@ -52,13 +53,20 @@ namespace tupapiService.Test.Controllers
             request.RequestUri = new Uri("http://localhost:50268/api/User");
             request.Headers.Add("x-zumo-auth", token);
             request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
-            _controller = new UserController(TestContext)
+            var username = "u1";
+            var identity = new GenericIdentity(username, "");
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, username);
+            identity.AddClaim(nameIdentifierClaim);
+            var principal = new GenericPrincipal(identity, roles: new string[] { });
+            var user = new ClaimsPrincipal(principal);
+            _controller = new UserApiController(TestContext)
             {
-                Request = request
+                Request = request,
+                User = user
             };
             var response = _controller.GetCurrentUser();
             var result = TestHelper.ParseBaseResponse(response);
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.AreEqual("OK", result.StatusCode);
         }
     }
 }

@@ -1,79 +1,70 @@
 ﻿using System;
-using System.Data.Entity.Core;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Http;
-using AutoMapper;
-using Microsoft.Azure.Mobile.Server.Config;
+using System.Web.Http.Controllers;
+using System.Web.Http.Description;
+using System.Web.Http.OData;
+using Microsoft.Azure.Mobile.Server;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
 using tupapiService.Authentication;
 using tupapiService.DataObjects;
-using tupapiService.Helpers.CheckHelpers;
 using tupapiService.Helpers.ExceptionHelpers;
+using tupapiService.Mapping;
 using tupapiService.Models;
 
 namespace tupapiService.Controllers
 {
-    [MobileAppController]
     [Authorize]
-    public class UserController : ApiController
+    public class UserController : TableController<UserDTO>
     {
-        private readonly ITupapiContext _context;
-        private readonly MapperConfiguration _config;
-
-        public UserController()
+        private TupapiContext _context;
+        protected override void Initialize(HttpControllerContext controllerContext)
         {
-            _context = new TupapiContext();
-            _config = Mapping.Mapping.GetConfiguration();
+           
+                base.Initialize(controllerContext);
+                _context = new TupapiContext();
+               
+                DomainManager = new UserDomainManager(_context, Request, true);
         }
 
-        public UserController(ITupapiContext context)
+        public IQueryable<UserDTO> GetAllUsers()
         {
-            _context = context;
-            _config = Mapping.Mapping.GetConfiguration();
+            var claimsPrincipal = User as ClaimsPrincipal;
+            var userId = BaseAuth.GetUserId(claimsPrincipal);
+            return Query().Where(u => u.Id == userId);
         }
 
-        [Authorize]
-        public HttpResponseMessage GetCurrentUser()
+        public SingleResult<UserDTO> GetUser(string id)
         {
-            try
-            {
-                var claimsPrincipal = this.User as ClaimsPrincipal;
-                Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Debug.WriteLine(this.Request.Headers.ToString());
-                foreach (var c in claimsPrincipal.Claims)
-                {
-                    Debug.WriteLine(c.ToString());
-                }
-                var user = BaseAuth.GetUser(_context, claimsPrincipal);
-                var mapper = _config.CreateMapper();
-                var userDto = mapper.Map<Models.User, UserDTO>(user);
-                return Request.CreateResponse(HttpStatusCode.OK, userDto);
-            }
-            catch (ApiException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,
-                    new BaseResponse(ex.ApiResult, ex.ErrorType, ex.Message));
-            }
-            catch (EntitySqlException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Sql, ErrorType.None, ex.Message));
-            }
-            catch (ArgumentNullException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
-            }
+            var claimsPrincipal = User as ClaimsPrincipal;
+            var userId = BaseAuth.GetUserId(claimsPrincipal);
+            return Lookup(userId);
         }
+
+
+        public Task<UserDTO> PatchUser(Delta<UserDTO> patch)
+        {
+            var claimsPrincipal = User as ClaimsPrincipal;
+            var userId = BaseAuth.GetUserId(claimsPrincipal);
+            return UpdateAsync(userId, patch);
+        }
+
+        //[ResponseType(typeof (UserDTO))]
+        //public async Task<IHttpActionResult> PostUser(UserDTO user)
+        //{
+        //    var current = await InsertAsync(user);
+        //    return CreatedAtRoute("Tables", new {id = current.Id}, current);
+        //}
+
+        //public Task DeleteUser(string id)
+        //{
+        //    return DeleteAsync(id);
+        //}
     }
 }

@@ -59,7 +59,7 @@ namespace tupapiService.Controllers
                 BaseAuth.CheckPassword(user, request.Password);
 
 
-                var token = BaseAuth.CreateToken(account.AccountId);
+                var token = BaseAuth.CreateToken(user.Id);
 
                 var userDto = _mapper.Map<User, UserDTO>(user);
 

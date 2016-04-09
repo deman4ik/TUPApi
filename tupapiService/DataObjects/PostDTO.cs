@@ -7,6 +7,11 @@ namespace tupapiService.DataObjects
 {
     public class PostDTO : ITableData, IPost
     {
+        public string Id { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
+        public byte[] Version { get; set; }
+        public bool Deleted { get; set; }
         public string UserId { get; set; }
         public string UserName { get; set; }
         public string PhotoUrl { get; set; }
@@ -14,10 +19,5 @@ namespace tupapiService.DataObjects
         public PhotoType Type { get; set; }
         public PhotoStatus Status { get; set; }
         public int Likes { get; set; }
-        public string Id { get; set; }
-        public byte[] Version { get; set; }
-        public DateTimeOffset? CreatedAt { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
-        public bool Deleted { get; set; }
     }
 }
