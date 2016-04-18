@@ -9,7 +9,7 @@ namespace tupapiService.Controllers
     [MobileAppController]
     public class SocialLoginController : ApiController
     {
-        [Route("/api/login")]
+       
         [HttpGet]
         public HttpResponseMessage Login([FromUri] string code = null,
             [FromUri] string grant_type = null,

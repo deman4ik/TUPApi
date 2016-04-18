@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Core;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -48,11 +49,17 @@ namespace tupapiService.Controllers
             {
                 var claimsPrincipal = this.User as ClaimsPrincipal;
                 var user = BaseAuth.GetUser(_context, claimsPrincipal);
-                Post dbPost = _mapper.Map<PostDTO, Post>(post);
-                dbPost.Status = PhotoStatus.Planned;
-                dbPost.Type = CheckData.GetPhotoType(user.Type);
                 var id = SequentialGuid.NewGuid();
-                dbPost.Id = id;
+                Post dbPost = new Post
+                {
+                    UserId = user.Id,
+                    Description = post.Description,
+                    Status = PhotoStatus.Planned,
+                    Type = CheckData.GetPhotoType(user.Type),
+                    Id = id,
+                    PhotoUrl = Const.StorageBaseUrl + Const.StoragePostsContainer + "/" + id
+                };
+
                 var response = new PostResponse {Id = id};
                 using (var storage = new AzureStorage())
                 {
@@ -66,21 +73,25 @@ namespace tupapiService.Controllers
             }
             catch (ApiException ex)
             {
+                Debug.WriteLine(ex);
                 return Request.CreateResponse(HttpStatusCode.Unauthorized,
                     new BaseResponse(ex.ApiResult, ex.ErrorType, ex.Message));
             }
             catch (EntitySqlException ex)
             {
+                Debug.WriteLine(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
                     new BaseResponse(ApiResult.Sql, ErrorType.None, ex.Message));
             }
             catch (ArgumentNullException ex)
             {
+                Debug.WriteLine(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
                     new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
                     new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
             }

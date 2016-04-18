@@ -54,7 +54,8 @@ namespace tupapiService.Helpers.StorageHelpers
                     SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(5),
                     Permissions = SharedAccessBlobPermissions.Write
                 };
-                return _postsContainer.GetSharedAccessSignature(sasPolicy);
+                
+                return _postsContainer.Uri + _postsContainer.GetSharedAccessSignature(sasPolicy);
             }
             catch (Exception ex )
             {
