@@ -53,9 +53,10 @@ namespace tupapiService.Helpers
             }
         }
 
-        public static Guid NewGuid()
+
+        public static string NewGuid()
         {
-            return Instance.GetGuid();
+            return Instance.GetGuid().ToString();
         }
 
         private long GetCurrentSequence(DateTime value)

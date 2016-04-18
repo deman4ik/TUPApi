@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="Authentication\LoginTest.cs" />
     <Compile Include="Authentication\RegistrationTest.cs" />
+    <Compile Include="Controllers\PostApiControllerTest.cs" />
     <Compile Include="Controllers\UserControllerTest.cs" />
     <Compile Include="Infrastructure\BaseControllerTest.cs" />
     <Compile Include="Infrastructure\ControllerResult.cs" />

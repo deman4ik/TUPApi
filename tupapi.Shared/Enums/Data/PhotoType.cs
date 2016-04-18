@@ -10,6 +10,12 @@
         /// </summary>
         Basic,
 
+
+        /// <summary>
+        /// Standart Photo from Premium Account
+        /// </summary>
+        Premium,
+
         /// <summary>
         ///     Paid Photo from Commercial Account
         /// </summary>

@@ -6,6 +6,12 @@ namespace tupapiService.Models
 {
     public class User : EntityData
     {
+        public User()
+        {
+            Accounts= new HashSet<Account>();
+            Posts = new HashSet<Post>();
+            Votes = new HashSet<Vote>();
+        }
         /// <summary>
         ///     User Name
         /// </summary>

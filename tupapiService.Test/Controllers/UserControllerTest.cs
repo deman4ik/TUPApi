@@ -47,10 +47,9 @@ namespace tupapiService.Test.Controllers
                 Password = "user1pwd"
             };
 
-            string token = BaseAuth.CreateToken("STANDART:u1");
+            string token = BaseAuth.CreateToken("u1");
             var config = new HttpConfiguration();
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("http://localhost:50268/api/User");
+            var request = new HttpRequestMessage {RequestUri = new Uri("http://localhost:50268/api/User")};
             request.Headers.Add("x-zumo-auth", token);
             request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
             var username = "u1";

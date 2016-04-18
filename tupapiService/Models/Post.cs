@@ -8,6 +8,10 @@ namespace tupapiService.Models
 {
     public class Post : EntityData
     {
+        public Post()
+        {
+            Votes = new HashSet<Vote>();
+        }
         /// <summary>
         ///     User ID
         /// </summary>

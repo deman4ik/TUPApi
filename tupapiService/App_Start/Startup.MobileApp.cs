@@ -16,7 +16,7 @@ namespace tupapiService
 
             //For more information on Web API tracing, see http://go.microsoft.com/fwlink/?LinkId=620686 
             config.EnableSystemDiagnosticsTracing();
-
+            config.MapHttpAttributeRoutes();
             new MobileAppConfiguration()
                 //  .AddMobileAppHomeController()
                 .UseDefaultConfiguration()

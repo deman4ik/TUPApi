@@ -18,6 +18,14 @@
         /// <summary>
         ///     Paid commercial user type
         /// </summary>
-        Commercial
+        Commercial,
+
+
+        /// <summary>
+        /// Administration Account
+        /// </summary>
+        Admin
+
+
     }
 }

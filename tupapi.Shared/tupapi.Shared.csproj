@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="DataObjects\BaseResponse.cs" />
     <Compile Include="DataObjects\LoginResult.cs" />
+    <Compile Include="DataObjects\PostResponse.cs" />
     <Compile Include="Helpers\Const.cs" />
     <Compile Include="DataObjects\StandartAuthRequest.cs" />
     <Compile Include="DataObjects\User.cs" />

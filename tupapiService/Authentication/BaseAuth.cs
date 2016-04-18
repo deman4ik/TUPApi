@@ -55,7 +55,7 @@ namespace tupapiService.Authentication
             {
                 Account newAccount = new Account
                 {
-                    Id = SequentialGuid.NewGuid().ToString(),
+                    Id = SequentialGuid.NewGuid(),
                     AccountId = providerName + ":" + userId,
                     UserId = userId,
                     Provider = provider,

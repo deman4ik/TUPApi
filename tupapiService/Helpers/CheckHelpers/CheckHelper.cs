@@ -20,6 +20,13 @@ namespace tupapiService.Helpers.CheckHelpers
             }
         }
 
+        public static void IsOwn(string objectUserId, string currentUserId)
+        {
+            if (objectUserId != currentUserId)
+            {
+                throw new ApiException(ApiResult.Denied,ErrorType.NotOwner,null);
+            }
+        }
         private static bool IsNameValid(string name)
         {
             //TODO: Check this Regex

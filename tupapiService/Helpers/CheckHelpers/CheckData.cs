@@ -62,5 +62,16 @@ namespace tupapiService.Helpers.CheckHelpers
                 throw new ApiException(ApiResult.NotFound, ErrorType.AccountNotFound, userId);
             return account;
         }
+
+        public static PhotoType GetPhotoType(UserType type)
+        {
+            switch (type)
+            {
+                case UserType.Basic: return    PhotoType.Basic;
+                case UserType.Commercial: return PhotoType.Commercial;
+                    case UserType.Premium: return PhotoType.Premium;
+                default: return PhotoType.Basic; 
+            }
+        }
     }
 }

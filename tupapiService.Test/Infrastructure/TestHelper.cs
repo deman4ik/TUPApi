@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Web.Http;
 using System.Web.Http.Hosting;
 using Newtonsoft.Json;
@@ -101,6 +103,38 @@ namespace tupapiService.Test.Infrastructure
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("# User Id:");
             Console.WriteLine(result.User.Id);
+        }
+
+        public static PostResponse ParsePostResponse(HttpResponseMessage response)
+        {
+            if (response == null)
+            {
+                Console.WriteLine("HttpResponseMessage is NULL");
+                return null;
+            }
+            var result = JsonConvert.DeserializeObject<PostResponse>(response.Content.ReadAsStringAsync().Result);
+            if (result != null)
+            {
+                LogPostResponse(result);
+            }
+            return result;
+        }
+
+        public static void LogPostResponse(PostResponse result)
+        {
+            Console.WriteLine("# Post Id:");
+            Console.WriteLine(result.Id);
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine("# Sas:");
+            Console.WriteLine(result.Sas);
+        }
+        public static ClaimsPrincipal GetUser(string id)
+        {
+            var identity = new GenericIdentity(id, "");
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, id);
+            identity.AddClaim(nameIdentifierClaim);
+            var principal = new GenericPrincipal(identity, roles: new string[] { });
+            return new ClaimsPrincipal(principal);
         }
     }
 }
