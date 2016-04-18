@@ -67,10 +67,14 @@ namespace tupapiService.Helpers.CheckHelpers
         {
             switch (type)
             {
-                case UserType.Basic: return    PhotoType.Basic;
-                case UserType.Commercial: return PhotoType.Commercial;
-                    case UserType.Premium: return PhotoType.Premium;
-                default: return PhotoType.Basic; 
+                case UserType.Basic:
+                    return PhotoType.Basic;
+                case UserType.Commercial:
+                    return PhotoType.Commercial;
+                case UserType.Premium:
+                    return PhotoType.Premium;
+                default:
+                    return PhotoType.Basic;
             }
         }
     }

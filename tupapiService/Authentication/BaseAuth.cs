@@ -10,6 +10,7 @@ using Microsoft.Azure.Mobile.Server.Login;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
 using tupapi.Shared.Enums.Auth;
+using tupapi.Shared.Helpers;
 using tupapiService.Helpers;
 using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;

@@ -22,15 +22,16 @@ namespace tupapiService.Test.Controllers
         private Post _post;
         private MapperConfiguration _config;
         private IMapper _mapper;
+
         [TestInitialize]
         public void PostApiControllerTestInitialize()
         {
             _config = Mapping.Mapping.GetConfiguration();
             _mapper = _config.CreateMapper();
-            TestDbPopulator.PopulateDb(2,1);
+            TestDbPopulator.PopulateDb(2, 1);
             string token = BaseAuth.CreateToken("u1");
             var config = new HttpConfiguration();
-            var request = new HttpRequestMessage { RequestUri = new Uri("http://localhost:50268/api/Post") };
+            var request = new HttpRequestMessage {RequestUri = new Uri("http://localhost:50268/api/Post")};
             request.Headers.Add("x-zumo-auth", token);
             request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
             _controller = new PostApiController(TestContext)
@@ -47,7 +48,7 @@ namespace tupapiService.Test.Controllers
             PostDTO postDto = _mapper.Map<Post, PostDTO>(_post);
             var response = _controller.Post(postDto);
             var result = TestHelper.ParsePostResponse(response);
-            Assert.AreEqual(HttpStatusCode.Created,response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             Assert.IsNotNull(result.Id);
             Assert.IsNotNull(result.Sas);
         }
@@ -57,7 +58,7 @@ namespace tupapiService.Test.Controllers
         {
             _post = TestDbPopulator.GetPost(3, 1);
             PostDTO postDto = _mapper.Map<Post, PostDTO>(_post);
-            var req = new HttpRequestMessage { RequestUri = new Uri("http://localhost:50268/api/Post") };
+            var req = new HttpRequestMessage {RequestUri = new Uri("http://localhost:50268/api/Post")};
             req.Properties[HttpPropertyKeys.HttpConfigurationKey] = new HttpConfiguration();
             _controller = new PostApiController(TestContext)
             {

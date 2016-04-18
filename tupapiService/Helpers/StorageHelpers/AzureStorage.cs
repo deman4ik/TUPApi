@@ -6,6 +6,7 @@ using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using tupapi.Shared.Enums;
+using tupapi.Shared.Helpers;
 using tupapiService.Helpers.ExceptionHelpers;
 
 namespace tupapiService.Helpers.StorageHelpers
@@ -19,11 +20,11 @@ namespace tupapiService.Helpers.StorageHelpers
             try
             {
                 // Retrieve storage account from connection string.
-                 var storageAccount = CloudStorageAccount.Parse(
-                     CloudConfigurationManager.GetSetting("StorageConnectionString"));
+                var storageAccount = CloudStorageAccount.Parse(
+                    CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
                 // Create the blob client.
-                 var blobClient = storageAccount.CreateCloudBlobClient();
+                var blobClient = storageAccount.CreateCloudBlobClient();
 
                 // Retrieve a reference to a container.
                 _postsContainer = blobClient.GetContainerReference(Const.StoragePostsContainer);
@@ -54,15 +55,13 @@ namespace tupapiService.Helpers.StorageHelpers
                     SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(5),
                     Permissions = SharedAccessBlobPermissions.Write
                 };
-                
+
                 return _postsContainer.Uri + _postsContainer.GetSharedAccessSignature(sasPolicy);
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
-                
-                throw new ApiException(ApiResult.Unknown, ErrorType.StorageError,ex.Message);
+                throw new ApiException(ApiResult.Unknown, ErrorType.StorageError, ex.Message);
             }
-            
         }
 
         public void Dispose()

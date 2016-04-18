@@ -30,9 +30,6 @@ namespace tupapiService.Test.Controllers
         [TestInitialize]
         public void UserControllerTestInitialize()
         {
-            
-           
-           
         }
 
         [TestMethod]
@@ -56,7 +53,7 @@ namespace tupapiService.Test.Controllers
             var identity = new GenericIdentity(username, "");
             var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, username);
             identity.AddClaim(nameIdentifierClaim);
-            var principal = new GenericPrincipal(identity, roles: new string[] { });
+            var principal = new GenericPrincipal(identity, roles: new string[] {});
             var user = new ClaimsPrincipal(principal);
             _controller = new UserApiController(TestContext)
             {

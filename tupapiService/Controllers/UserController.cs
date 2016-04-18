@@ -24,13 +24,13 @@ namespace tupapiService.Controllers
     public class UserController : TableController<UserDTO>
     {
         private TupapiContext _context;
+
         protected override void Initialize(HttpControllerContext controllerContext)
         {
-           
-                base.Initialize(controllerContext);
-                _context = new TupapiContext();
-               
-                DomainManager = new UserDomainManager(_context, Request, true);
+            base.Initialize(controllerContext);
+            _context = new TupapiContext();
+
+            DomainManager = new UserDomainManager(_context, Request, true);
         }
 
         public IQueryable<UserDTO> GetAllUsers()

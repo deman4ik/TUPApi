@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using tupapi.Shared.Enums;
 using tupapi.Shared.Enums.Auth;
+using tupapi.Shared.Helpers;
 using tupapiService.Models;
 
 namespace tupapiService.Helpers.DBHelpers
@@ -109,7 +110,7 @@ namespace tupapiService.Helpers.DBHelpers
             };
         }
 
-         public List<Post> GetPosts(int amountPerUser, int userAmount)
+        public List<Post> GetPosts(int amountPerUser, int userAmount)
         {
             var result = new List<Post>();
 
@@ -118,7 +119,7 @@ namespace tupapiService.Helpers.DBHelpers
                 for (var j = 1; j <= amountPerUser; j++)
                 {
                     result.Add(
-                        GetPost(j,i)
+                        GetPost(j, i)
                         );
                 }
             }
@@ -132,6 +133,5 @@ namespace tupapiService.Helpers.DBHelpers
                 _context.Posts.Add(post);
             }
         }
-
     }
 }

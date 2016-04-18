@@ -18,14 +18,11 @@ namespace tupapiService.Mapping
         public UserDomainManager(TupapiContext context, HttpRequestMessage request)
             : base(context, request)
         {
-            
         }
 
         public UserDomainManager(TupapiContext context, HttpRequestMessage request, bool enableSoftDelete)
             : base(context, request, enableSoftDelete)
         {
-            
         }
-
     }
 }

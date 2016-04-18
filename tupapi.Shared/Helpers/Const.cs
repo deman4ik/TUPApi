@@ -1,4 +1,4 @@
-﻿namespace tupapiService.Helpers
+﻿namespace tupapi.Shared.Helpers
 {
     public static class Const
     {

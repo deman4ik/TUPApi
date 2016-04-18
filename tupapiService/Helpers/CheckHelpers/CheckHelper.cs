@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using tupapi.Shared.Enums;
+using tupapi.Shared.Helpers;
 using tupapiService.Helpers.ExceptionHelpers;
 
 namespace tupapiService.Helpers.CheckHelpers
@@ -24,9 +25,10 @@ namespace tupapiService.Helpers.CheckHelpers
         {
             if (objectUserId != currentUserId)
             {
-                throw new ApiException(ApiResult.Denied,ErrorType.NotOwner,null);
+                throw new ApiException(ApiResult.Denied, ErrorType.NotOwner, null);
             }
         }
+
         private static bool IsNameValid(string name)
         {
             //TODO: Check this Regex

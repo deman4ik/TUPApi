@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace tupapi.Shared.DataObjects
 {
-   public class PostResponse
+    public class PostResponse
     {
         public string Id { get; set; }
         public string Sas { get; set; }

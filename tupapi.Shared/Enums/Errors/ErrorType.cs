@@ -35,7 +35,7 @@
         NotOwner = 400,
         ClaimNotFound = 401,
 
-            //Storage
-            StorageError = 500
+        //Storage
+        StorageError = 500
     }
 }

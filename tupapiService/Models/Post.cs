@@ -12,6 +12,7 @@ namespace tupapiService.Models
         {
             Votes = new HashSet<Vote>();
         }
+
         /// <summary>
         ///     User ID
         /// </summary>

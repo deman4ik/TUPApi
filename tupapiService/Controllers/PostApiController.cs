@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.Azure.Mobile.Server.Config;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
+using tupapi.Shared.Helpers;
 using tupapiService.Authentication;
 using tupapiService.DataObjects;
 using tupapiService.Helpers;
@@ -57,7 +58,7 @@ namespace tupapiService.Controllers
                     Status = PhotoStatus.Planned,
                     Type = CheckData.GetPhotoType(user.Type),
                     Id = id,
-                    PhotoUrl = Const.StorageBaseUrl + Const.StoragePostsContainer + "/" + id
+                    PhotoUrl = Const.StorageBaseUrl + Const.StoragePostsContainer + "/" + id + ".jpeg"
                 };
 
                 var response = new PostResponse {Id = id};
@@ -65,8 +66,8 @@ namespace tupapiService.Controllers
                 {
                     response.Sas = storage.GetPostsSas();
                 }
-                
-                
+
+
                 _context.Posts.Add(dbPost);
                 _context.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.Created, response);
@@ -95,7 +96,6 @@ namespace tupapiService.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
                     new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
             }
-
         }
     }
 }

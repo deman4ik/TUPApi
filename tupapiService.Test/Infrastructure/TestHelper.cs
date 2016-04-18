@@ -128,12 +128,13 @@ namespace tupapiService.Test.Infrastructure
             Console.WriteLine("# Sas:");
             Console.WriteLine(result.Sas);
         }
+
         public static ClaimsPrincipal GetUser(string id)
         {
             var identity = new GenericIdentity(id, "");
             var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, id);
             identity.AddClaim(nameIdentifierClaim);
-            var principal = new GenericPrincipal(identity, roles: new string[] { });
+            var principal = new GenericPrincipal(identity, roles: new string[] {});
             return new ClaimsPrincipal(principal);
         }
     }
