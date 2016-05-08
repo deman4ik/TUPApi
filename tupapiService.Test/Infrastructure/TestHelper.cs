@@ -7,8 +7,9 @@ using System.Web.Http.Hosting;
 using Newtonsoft.Json;
 using tupapi.Shared.DataObjects;
 using tupapiService.Controllers;
+using tupapiService.DataObjects;
 using tupapiService.Models;
-using LoginResult = tupapiService.Controllers.LoginResult;
+using LoginResult = tupapiService.DataObjects.LoginResult;
 
 namespace tupapiService.Test.Infrastructure
 {
@@ -20,7 +21,7 @@ namespace tupapiService.Test.Infrastructure
         /// <param name="context">ITupapiContext</param>
         /// <param name="req">Creds</param>
         /// <returns></returns>
-        public static LoginResult Authenticate(ITupapiContext context, StandartAuthRequest req)
+        public static TestResult<LoginResult> Authenticate(ITupapiContext context, StandartAuthRequest req)
         {
             var config = new HttpConfiguration();
             LoginController controller = new LoginController(context)
@@ -38,95 +39,104 @@ namespace tupapiService.Test.Infrastructure
         /// </summary>
         /// <param name="response">Base Controller Response</param>
         /// <returns></returns>
-        public static ControllerResult ParseBaseResponse(HttpResponseMessage response)
+        public static TestResult<ErrorResponse> ParseErorResponse(HttpResponseMessage response)
         {
             if (response == null)
             {
                 Console.WriteLine("HttpResponseMessage is NULL");
                 return null;
             }
-            string content = response.Content.ReadAsStringAsync().Result;
-            var result = JsonConvert.DeserializeObject<BaseResponse>(response.Content.ReadAsStringAsync().Result);
-            var controllerResult = new ControllerResult
+            var result = JsonConvert.DeserializeObject<Response<ErrorResponse>>(response.Content.ReadAsStringAsync().Result);
+            var testResult = new TestResult<ErrorResponse>
             {
                 StatusCode = response.StatusCode.ToString(),
                 IsSuccessStatusCode = response.IsSuccessStatusCode,
                 ApiResult = result.ApiResult,
-                ErrorType = result.ErrorType,
-                ResponseMessage = result.Message
+                Data = result.Data
             };
-            LogBaseResponse(controllerResult);
-            return controllerResult;
+            Console.WriteLine(testResult.ToString());
+            return testResult;
         }
 
-        /// <summary>
-        ///     Log Base Response to Console
-        /// </summary>
-        /// <param name="result"></param>
-        public static void LogBaseResponse(ControllerResult result)
-        {
-            Console.WriteLine("# Status Code:");
-            Console.WriteLine(result.StatusCode);
-            Console.WriteLine(Environment.NewLine);
-            Console.WriteLine("# Is Success Status Code:");
-            Console.WriteLine(result.IsSuccessStatusCode);
-            Console.WriteLine(Environment.NewLine);
-            Console.WriteLine("# Api Result:");
-            Console.WriteLine(result.ApiResult.ToString());
-            Console.WriteLine(Environment.NewLine);
-            Console.WriteLine("# Error Type:");
-            Console.WriteLine(result.ErrorType.ToString());
-            Console.WriteLine(Environment.NewLine);
-            Console.WriteLine("# Response Message:");
-            Console.WriteLine(result.ResponseMessage);
-        }
+      
 
-        public static LoginResult ParseLoginResponse(HttpResponseMessage response)
+        public static TestResult<LoginResult>  ParseLoginResponse(HttpResponseMessage response)
         {
             if (response == null)
             {
                 Console.WriteLine("HttpResponseMessage is NULL");
                 return null;
             }
-            var result = JsonConvert.DeserializeObject<LoginResult>(response.Content.ReadAsStringAsync().Result);
-            if (result != null)
+            var result = JsonConvert.DeserializeObject<Response<LoginResult>>(response.Content.ReadAsStringAsync().Result);
+
+            var testResult = new TestResult<LoginResult>
             {
-                LogLoginResult(result);
-            }
-            return result;
+                StatusCode = response.StatusCode.ToString(),
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                ApiResult = result.ApiResult,
+                Data = result.Data
+            };
+            Console.WriteLine(testResult.ToString());
+
+            return testResult;
         }
 
-        public static void LogLoginResult(LoginResult result)
-        {
-            Console.WriteLine("# Authentication Token:");
-            Console.WriteLine(result.AuthenticationToken);
-            Console.WriteLine(Environment.NewLine);
-            Console.WriteLine("# User Id:");
-            Console.WriteLine(result.User.Id);
-        }
-
-        public static PostResponse ParsePostResponse(HttpResponseMessage response)
+        public static TestResult<string> ParseRegistrationResponse(HttpResponseMessage response)
         {
             if (response == null)
             {
                 Console.WriteLine("HttpResponseMessage is NULL");
                 return null;
             }
-            var result = JsonConvert.DeserializeObject<PostResponse>(response.Content.ReadAsStringAsync().Result);
-            if (result != null)
+            var result = JsonConvert.DeserializeObject<Response<string>>(response.Content.ReadAsStringAsync().Result);
+            var testResult = new TestResult<string>
             {
-                LogPostResponse(result);
-            }
-            return result;
+                StatusCode = response.StatusCode.ToString(),
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                ApiResult = result.ApiResult,
+                Data = result.Data
+            };
+            Console.WriteLine(testResult.ToString());
+            return testResult;
         }
 
-        public static void LogPostResponse(PostResponse result)
+
+        public static TestResult<PostResponse> ParsePostResponse(HttpResponseMessage response)
         {
-            Console.WriteLine("# Post Id:");
-            Console.WriteLine(result.Id);
-            Console.WriteLine(Environment.NewLine);
-            Console.WriteLine("# Sas:");
-            Console.WriteLine(result.Sas);
+            if (response == null)
+            {
+                Console.WriteLine("HttpResponseMessage is NULL");
+                return null;
+            }
+            var result = JsonConvert.DeserializeObject<Response<PostResponse>>(response.Content.ReadAsStringAsync().Result);
+            var testResult = new TestResult<PostResponse>
+            {
+                StatusCode = response.StatusCode.ToString(),
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                ApiResult = result.ApiResult,
+                Data = result.Data
+            };
+            Console.WriteLine(testResult.ToString());
+            return testResult;
+        }
+
+        public static TestResult<UserDTO> ParseUserResponse(HttpResponseMessage response)
+        {
+            if (response == null)
+            {
+                Console.WriteLine("HttpResponseMessage is NULL");
+                return null;
+            }
+            var result = JsonConvert.DeserializeObject<Response<UserDTO>>(response.Content.ReadAsStringAsync().Result);
+            var testResult = new TestResult<UserDTO>
+            {
+                StatusCode = response.StatusCode.ToString(),
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                ApiResult = result.ApiResult,
+                Data = result.Data
+            };
+            Console.WriteLine(testResult.ToString());
+            return testResult;
         }
 
         public static ClaimsPrincipal GetUser(string id)

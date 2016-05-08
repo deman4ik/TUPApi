@@ -50,27 +50,22 @@ namespace tupapiService.Controllers
                 CheckData.UserExist(_context, true, email: request.Email, name: request.Name);
                 var newUser = BaseAuth.CreateUser(_context, Provider.Standart, request);
                 return Request.CreateResponse(HttpStatusCode.Created,
-                    new BaseResponse(ApiResult.Created, message: newUser.Id));
+                    new Response<string>(ApiResult.Created, newUser.Id));
             }
             catch (ApiException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,
-                    new BaseResponse(ex.ApiResult, ex.ErrorType, ex.Message));
+                return Request.CreateResponse(HttpStatusCode.Unauthorized,
+                    new Response<ErrorResponse>(ex.ApiResult, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Sql, ErrorType.None, ex.Message));
-            }
-            catch (ArgumentNullException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Sql, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Unknown, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }
     }

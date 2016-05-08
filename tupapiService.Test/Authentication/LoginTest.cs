@@ -13,7 +13,7 @@ using tupapiService.Controllers;
 using tupapiService.Helpers.DBHelpers;
 using tupapiService.Models;
 using tupapiService.Test.Infrastructure;
-using LoginResult = tupapiService.Controllers.LoginResult;
+using LoginResult = tupapiService.DataObjects.LoginResult;
 
 namespace tupapiService.Test.Authentication
 {
@@ -54,10 +54,10 @@ namespace tupapiService.Test.Authentication
                 Password = "user1pwd"
             };
             HttpResponseMessage response = _controller.Login(req);
-            LoginResult result = TestHelper.ParseLoginResponse(response);
+            TestResult<LoginResult> result = TestHelper.ParseLoginResponse(response);
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.AuthenticationToken);
-            Assert.AreEqual(result.User.Id, "u1");
+            Assert.IsNotNull(result.Data.AuthenticationToken);
+            Assert.AreEqual(result.Data.User.Id, "u1");
         }
 
 
@@ -65,13 +65,13 @@ namespace tupapiService.Test.Authentication
         public void Login_ShouldReturnErrorIfRequestIsNull()
         {
             HttpResponseMessage response = _controller.Login(null);
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseErorResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.IsNull, result.ErrorType);
-            Assert.AreEqual("request", result.ResponseMessage);
+            Assert.AreEqual(ErrorType.IsNull, result.Data.ErrorType);
+            Assert.AreEqual("request", result.Data.Message);
         }
 
         [TestMethod]
@@ -83,13 +83,13 @@ namespace tupapiService.Test.Authentication
                 Password = null
             };
             HttpResponseMessage response = _controller.Login(req);
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseErorResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.IsNull, result.ErrorType);
-            Assert.AreEqual(nameof(req.Password), result.ResponseMessage);
+            Assert.AreEqual(ErrorType.IsNull, result.Data.ErrorType);
+            Assert.AreEqual(nameof(req.Password), result.Data.Message);
         }
 
         [TestMethod]
@@ -101,13 +101,13 @@ namespace tupapiService.Test.Authentication
                 Password = "user354pwd"
             };
             HttpResponseMessage response = _controller.Login(req);
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseErorResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.UserWithEmailorNameNotFound, result.ErrorType);
-            Assert.AreEqual(req.Email, result.ResponseMessage);
+            Assert.AreEqual(ErrorType.UserWithEmailorNameNotFound, result.Data.ErrorType);
+            Assert.AreEqual(req.Email, result.Data.Message);
         }
 
         [TestMethod]
@@ -119,13 +119,13 @@ namespace tupapiService.Test.Authentication
                 Password = "user354pwd"
             };
             HttpResponseMessage response = _controller.Login(req);
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseErorResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.UserWithEmailorNameNotFound, result.ErrorType);
-            Assert.AreEqual(req.Name, result.ResponseMessage);
+            Assert.AreEqual(ErrorType.UserWithEmailorNameNotFound, result.Data.ErrorType);
+            Assert.AreEqual(req.Name, result.Data.Message);
         }
 
         [TestMethod]
@@ -137,13 +137,13 @@ namespace tupapiService.Test.Authentication
                 Password = "user354pwd"
             };
             HttpResponseMessage response = _controller.Login(req);
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseErorResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Denied, result.ApiResult);
-            Assert.AreEqual(ErrorType.PasswordWrong, result.ErrorType);
-            Assert.AreEqual("user354pwd", result.ResponseMessage);
+            Assert.AreEqual(ErrorType.PasswordWrong, result.Data.ErrorType);
+            Assert.AreEqual("user354pwd", result.Data.Message);
         }
 
         [TestMethod]
@@ -155,12 +155,12 @@ namespace tupapiService.Test.Authentication
                 Password = "user2pwd"
             };
             HttpResponseMessage response = _controller.Login(req);
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseErorResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Denied, result.ApiResult);
-            Assert.AreEqual(ErrorType.UserBlocked, result.ErrorType);
+            Assert.AreEqual(ErrorType.UserBlocked, result.Data.ErrorType);
         }
     }
 }

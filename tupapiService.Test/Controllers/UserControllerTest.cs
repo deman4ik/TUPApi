@@ -10,13 +10,14 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using tupapi.Shared.DataObjects;
 using tupapiService.Authentication;
 using tupapiService.Controllers;
 using tupapiService.Helpers.DBHelpers;
 using tupapiService.Models;
 using tupapiService.Test.Infrastructure;
-using LoginResult = tupapiService.Controllers.LoginResult;
+using LoginResult = tupapiService.DataObjects.LoginResult;
 using User = tupapiService.Models.User;
 
 namespace tupapiService.Test.Controllers
@@ -61,8 +62,10 @@ namespace tupapiService.Test.Controllers
                 User = user
             };
             var response = _controller.GetCurrentUser();
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseUserResponse(response);
             Assert.AreEqual("OK", result.StatusCode);
         }
+
+
     }
 }

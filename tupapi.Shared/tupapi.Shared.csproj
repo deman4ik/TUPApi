@@ -35,9 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DataObjects\BaseResponse.cs" />
+    <Compile Include="DataObjects\ErrorResponse.cs" />
     <Compile Include="DataObjects\LoginResult.cs" />
     <Compile Include="DataObjects\PostResponse.cs" />
+    <Compile Include="DataObjects\Response.cs" />
     <Compile Include="Helpers\Const.cs" />
     <Compile Include="DataObjects\StandartAuthRequest.cs" />
     <Compile Include="DataObjects\User.cs" />
@@ -53,8 +54,9 @@
     <Compile Include="Enums\Data\VoteType.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Interfaces\IAccount.cs" />
-    <Compile Include="Interfaces\IBaseResponse.cs" />
+    <Compile Include="Interfaces\IErrorResponse.cs" />
     <Compile Include="Interfaces\ILoginResult.cs" />
+    <Compile Include="Interfaces\IResponse.cs" />
     <Compile Include="Interfaces\ITableData.cs" />
     <Compile Include="Interfaces\IPost.cs" />
     <Compile Include="Interfaces\IUser.cs" />

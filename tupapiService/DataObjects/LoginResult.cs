@@ -1,7 +1,7 @@
-﻿using tupapi.Shared.Interfaces;
-using tupapiService.DataObjects;
+﻿using System;
+using tupapi.Shared.Interfaces;
 
-namespace tupapiService.Controllers
+namespace tupapiService.DataObjects
 {
     public class LoginResult : ILoginResult
     {
@@ -13,5 +13,9 @@ namespace tupapiService.Controllers
 
         public string AuthenticationToken { get; set; }
         public IUser User { get; set; }
+        public override string ToString()
+        {
+            return "# Authentication Token:" + Environment.NewLine + " # User Id:" + Environment.NewLine + User.Id;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using tupapi.Shared.Interfaces;
+﻿using System;
+using tupapi.Shared.Interfaces;
 
 namespace tupapi.Shared.DataObjects
 {
@@ -12,5 +13,10 @@ namespace tupapi.Shared.DataObjects
 
         public string AuthenticationToken { get; set; }
         public IUser User { get; set; }
+
+        public override string ToString()
+        {
+            return "# Authentication Token:" + Environment.NewLine + " # User Id:" + Environment.NewLine + User.Id;
+        }
     }
 }

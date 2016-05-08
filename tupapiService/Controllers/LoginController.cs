@@ -13,6 +13,7 @@ using tupapiService.DataObjects;
 using tupapiService.Helpers.CheckHelpers;
 using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;
+using LoginResult = tupapiService.DataObjects.LoginResult;
 using User = tupapiService.Models.User;
 
 namespace tupapiService.Controllers
@@ -64,29 +65,22 @@ namespace tupapiService.Controllers
                 var userDto = _mapper.Map<User, UserDTO>(user);
 
                 // Generate AuthenticationToken
-                return Request.CreateResponse(HttpStatusCode.OK,
-                    new LoginResult(token,
-                        userDto));
+                return Request.CreateResponse(HttpStatusCode.OK, new Response<LoginResult>( ApiResult.Ok,new LoginResult(token,userDto)));
             }
             catch (ApiException ex)
             {
                 return Request.CreateResponse(HttpStatusCode.Unauthorized,
-                    new BaseResponse(ex.ApiResult, ex.ErrorType, ex.Message));
+                    new Response<ErrorResponse>(ex.ApiResult, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Sql, ErrorType.None, ex.Message));
-            }
-            catch (ArgumentNullException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Sql, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Unknown, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }
     }

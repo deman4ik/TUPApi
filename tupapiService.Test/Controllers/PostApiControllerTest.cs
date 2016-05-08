@@ -49,8 +49,8 @@ namespace tupapiService.Test.Controllers
             var response = _controller.Post(postDto);
             var result = TestHelper.ParsePostResponse(response);
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            Assert.IsNotNull(result.Id);
-            Assert.IsNotNull(result.Sas);
+            Assert.IsNotNull(result.Data.Id);
+            Assert.IsNotNull(result.Data.Sas);
         }
 
         [TestMethod]
@@ -65,7 +65,7 @@ namespace tupapiService.Test.Controllers
                 Request = req
             };
             var response = _controller.Post(postDto);
-            var result = TestHelper.ParseBaseResponse(response);
+            var result = TestHelper.ParseErorResponse(response);
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
     }

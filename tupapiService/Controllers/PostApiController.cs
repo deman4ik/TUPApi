@@ -61,10 +61,10 @@ namespace tupapiService.Controllers
                     PhotoUrl = Const.StorageBaseUrl + Const.StoragePostsContainer + "/" + id + ".jpeg"
                 };
 
-                var response = new PostResponse {Id = id};
+                var response = new Response<PostResponse>(ApiResult.Ok, new PostResponse {Id = id});
                 using (var storage = new AzureStorage())
                 {
-                    response.Sas = storage.GetPostsSas();
+                    response.Data.Sas = storage.GetPostsSas();
                 }
 
 
@@ -74,27 +74,18 @@ namespace tupapiService.Controllers
             }
             catch (ApiException ex)
             {
-                Debug.WriteLine(ex);
                 return Request.CreateResponse(HttpStatusCode.Unauthorized,
-                    new BaseResponse(ex.ApiResult, ex.ErrorType, ex.Message));
+                    new Response<ErrorResponse>(ex.ApiResult, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
-                Debug.WriteLine(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Sql, ErrorType.None, ex.Message));
-            }
-            catch (ArgumentNullException ex)
-            {
-                Debug.WriteLine(ex);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Sql, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Unknown, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }
     }

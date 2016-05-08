@@ -52,27 +52,22 @@ namespace tupapiService.Controllers
                 var user = BaseAuth.GetUser(_context, claimsPrincipal);
                 var mapper = _config.CreateMapper();
                 var userDto = mapper.Map<Models.User, UserDTO>(user);
-                return Request.CreateResponse(HttpStatusCode.OK, userDto);
+                return Request.CreateResponse(HttpStatusCode.OK, new Response<UserDTO>(ApiResult.Ok, userDto));
             }
             catch (ApiException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,
-                    new BaseResponse(ex.ApiResult, ex.ErrorType, ex.Message));
+                return Request.CreateResponse(HttpStatusCode.Unauthorized,
+                    new Response<ErrorResponse>(ex.ApiResult, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Sql, ErrorType.None, ex.Message));
-            }
-            catch (ArgumentNullException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Sql, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new BaseResponse(ApiResult.Unknown, ErrorType.Internal, ex.Message));
+                    new Response<ErrorResponse>(ApiResult.Unknown, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }
     }

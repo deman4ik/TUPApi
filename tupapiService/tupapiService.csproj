@@ -229,7 +229,7 @@
     <Compile Include="Authentication\AccessToken.cs" />
     <Compile Include="Authentication\BaseAuth.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\LoginResult.cs" />
+    <Compile Include="DataObjects\LoginResult.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
