@@ -65,7 +65,7 @@ namespace tupapiService.Test.Controllers
                 Request = req
             };
             var response = _controller.Post(postDto);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParsePostResponse(response);
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
     }

@@ -52,13 +52,13 @@ namespace tupapiService.Test.Authentication
         public void Registration_ShouldReturnErrorIfRequestIsNull()
         {
             HttpResponseMessage response = _controller.Registration(null);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.IsNull, result.Data.ErrorType);
-            Assert.AreEqual(result.Data.Message, "request");
+            Assert.AreEqual(ErrorType.IsNull, result.Error.ErrorType);
+            Assert.AreEqual(result.Error.Message, "request");
         }
 
         [TestMethod]
@@ -70,13 +70,13 @@ namespace tupapiService.Test.Authentication
                 Password = "abcdefghigklmpnop"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.IsNull, result.Data.ErrorType);
-            Assert.AreEqual(nameof(req.Email), result.Data.Message);
+            Assert.AreEqual(ErrorType.IsNull, result.Error.ErrorType);
+            Assert.AreEqual(nameof(req.Email), result.Error.Message);
         }
 
         [TestMethod]
@@ -88,13 +88,13 @@ namespace tupapiService.Test.Authentication
                 Password = "abcdefghigklmpnop"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.IsNull, result.Data.ErrorType);
-            Assert.AreEqual(nameof(req.Name), result.Data.Message);
+            Assert.AreEqual(ErrorType.IsNull, result.Error.ErrorType);
+            Assert.AreEqual(nameof(req.Name), result.Error.Message);
         }
 
         [TestMethod]
@@ -106,13 +106,13 @@ namespace tupapiService.Test.Authentication
                 Name = "test"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.IsNull, result.Data.ErrorType);
-            Assert.AreEqual(nameof(req.Password), result.Data.Message);
+            Assert.AreEqual(ErrorType.IsNull, result.Error.ErrorType);
+            Assert.AreEqual(nameof(req.Password), result.Error.Message);
         }
 
         [TestMethod]
@@ -125,13 +125,13 @@ namespace tupapiService.Test.Authentication
                 Password = "abcdefghigklmpnop"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.EmailInvalid, result.Data.ErrorType);
-            Assert.AreEqual(req.Email, result.Data.Message);
+            Assert.AreEqual(ErrorType.EmailInvalid, result.Error.ErrorType);
+            Assert.AreEqual(req.Email, result.Error.Message);
         }
 
         [TestMethod]
@@ -144,13 +144,13 @@ namespace tupapiService.Test.Authentication
                 Password = "abcdefghigklmpnop"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.NameInvalid, result.Data.ErrorType);
-            Assert.AreEqual(req.Name, result.Data.Message);
+            Assert.AreEqual(ErrorType.NameInvalid, result.Error.ErrorType);
+            Assert.AreEqual(req.Name, result.Error.Message);
         }
 
         [TestMethod]
@@ -163,13 +163,13 @@ namespace tupapiService.Test.Authentication
                 Password = "12345670"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.PasswordInvalid, result.Data.ErrorType);
-            Assert.AreEqual(req.Password, result.Data.Message);
+            Assert.AreEqual(ErrorType.PasswordInvalid, result.Error.ErrorType);
+            Assert.AreEqual(req.Password, result.Error.Message);
         }
 
         [TestMethod]
@@ -182,13 +182,13 @@ namespace tupapiService.Test.Authentication
                 Password = "1234567"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.PasswordLength, result.Data.ErrorType);
-            Assert.AreEqual("7", result.Data.Message);
+            Assert.AreEqual(ErrorType.PasswordLength, result.Error.ErrorType);
+            Assert.AreEqual("7", result.Error.Message);
         }
 
         [TestMethod]
@@ -201,13 +201,13 @@ namespace tupapiService.Test.Authentication
                 Password = "user1pwd"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.UserWithEmailExist, result.Data.ErrorType);
-            Assert.AreEqual(req.Email, result.Data.Message);
+            Assert.AreEqual(ErrorType.UserWithEmailExist, result.Error.ErrorType);
+            Assert.AreEqual(req.Email, result.Error.Message);
         }
 
         [TestMethod]
@@ -220,13 +220,13 @@ namespace tupapiService.Test.Authentication
                 Password = "user1pwd"
             };
             HttpResponseMessage response = _controller.Registration(req);
-            var result = TestHelper.ParseErorResponse(response);
+            var result = TestHelper.ParseRegistrationResponse(response);
             Assert.IsNotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
-            Assert.AreEqual(ErrorType.UserWithNameExist, result.Data.ErrorType);
-            Assert.AreEqual(req.Name, result.Data.Message);
+            Assert.AreEqual(ErrorType.UserWithNameExist, result.Error.ErrorType);
+            Assert.AreEqual(req.Name, result.Error.Message);
         }
     }
 }

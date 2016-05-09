@@ -57,17 +57,17 @@ namespace tupapiService.Controllers
             catch (ApiException ex)
             {
                 return Request.CreateResponse(HttpStatusCode.Unauthorized,
-                    new Response<ErrorResponse>(ex.ApiResult, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
+                    new Response<UserDTO>(ex.ApiResult,null, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new Response<ErrorResponse>(ApiResult.Sql, new ErrorResponse(ErrorType.None, ex.Message, ex)));
+                    new Response<UserDTO>(ApiResult.Sql, null, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new Response<ErrorResponse>(ApiResult.Unknown, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
+                    new Response<UserDTO>(ApiResult.Unknown, null, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }
     }

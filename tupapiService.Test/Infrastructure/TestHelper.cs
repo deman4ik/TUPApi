@@ -34,29 +34,7 @@ namespace tupapiService.Test.Infrastructure
             return ParseLoginResponse(response);
         }
 
-        /// <summary>
-        ///     Desitialize Controller Base Response
-        /// </summary>
-        /// <param name="response">Base Controller Response</param>
-        /// <returns></returns>
-        public static TestResult<ErrorResponse> ParseErorResponse(HttpResponseMessage response)
-        {
-            if (response == null)
-            {
-                Console.WriteLine("HttpResponseMessage is NULL");
-                return null;
-            }
-            var result = JsonConvert.DeserializeObject<Response<ErrorResponse>>(response.Content.ReadAsStringAsync().Result);
-            var testResult = new TestResult<ErrorResponse>
-            {
-                StatusCode = response.StatusCode.ToString(),
-                IsSuccessStatusCode = response.IsSuccessStatusCode,
-                ApiResult = result.ApiResult,
-                Data = result.Data
-            };
-            Console.WriteLine(testResult.ToString());
-            return testResult;
-        }
+
 
       
 
@@ -74,7 +52,8 @@ namespace tupapiService.Test.Infrastructure
                 StatusCode = response.StatusCode.ToString(),
                 IsSuccessStatusCode = response.IsSuccessStatusCode,
                 ApiResult = result.ApiResult,
-                Data = result.Data
+                Data = result.Data,
+                Error = result.Error
             };
             Console.WriteLine(testResult.ToString());
 
@@ -94,7 +73,8 @@ namespace tupapiService.Test.Infrastructure
                 StatusCode = response.StatusCode.ToString(),
                 IsSuccessStatusCode = response.IsSuccessStatusCode,
                 ApiResult = result.ApiResult,
-                Data = result.Data
+                Data = result.Data,
+                Error = result.Error
             };
             Console.WriteLine(testResult.ToString());
             return testResult;
@@ -114,7 +94,8 @@ namespace tupapiService.Test.Infrastructure
                 StatusCode = response.StatusCode.ToString(),
                 IsSuccessStatusCode = response.IsSuccessStatusCode,
                 ApiResult = result.ApiResult,
-                Data = result.Data
+                Data = result.Data,
+                Error = result.Error
             };
             Console.WriteLine(testResult.ToString());
             return testResult;
@@ -133,7 +114,8 @@ namespace tupapiService.Test.Infrastructure
                 StatusCode = response.StatusCode.ToString(),
                 IsSuccessStatusCode = response.IsSuccessStatusCode,
                 ApiResult = result.ApiResult,
-                Data = result.Data
+                Data = result.Data,
+                Error = result.Error
             };
             Console.WriteLine(testResult.ToString());
             return testResult;
