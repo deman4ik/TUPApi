@@ -87,7 +87,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.NotificationHubs, Version=2.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.4\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.5\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -244,7 +244,7 @@
     <Compile Include="Helpers\DBHelpers\TestDbPopulator.cs" />
     <Compile Include="Helpers\DBHelpers\TupapiInitializer.cs" />
     <Compile Include="Helpers\ExceptionHelpers\ApiException.cs" />
-    <Compile Include="Helpers\CheckHelpers\CheckHelper.cs" />
+    <Compile Include="Helpers\CheckHelpers\CheckVal.cs" />
     <Compile Include="Helpers\SequentialGuid.cs" />
     <Compile Include="Helpers\StorageHelpers\AzureStorage.cs" />
     <Compile Include="Mapping\GenericMappedEntityDomainManager.cs" />

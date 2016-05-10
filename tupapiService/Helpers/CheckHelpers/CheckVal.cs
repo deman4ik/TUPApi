@@ -6,7 +6,7 @@ using tupapiService.Helpers.ExceptionHelpers;
 
 namespace tupapiService.Helpers.CheckHelpers
 {
-    public static class CheckHelper
+    public static class CheckVal
     {
         /// <summary>
         ///     Checks object is null
@@ -29,26 +29,17 @@ namespace tupapiService.Helpers.CheckHelpers
             }
         }
 
-        private static bool IsNameValid(string name)
-        {
-            //TODO: Check this Regex
-            return Regex.IsMatch(name, Const.NameRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-        }
-
-        private static bool IsEmailValid(string email)
-        {
-            return Regex.IsMatch(email, Const.EmailRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-        }
+       
 
         public static void NameCheck(string name)
         {
-            if (!IsNameValid(name))
+            if (!CheckHelper.IsNameValid(name))
                 throw new ApiException(ApiResult.Validation, ErrorType.NameInvalid, name);
         }
 
         public static void EmailCheck(string email)
         {
-            if (!IsEmailValid(email))
+            if (!CheckHelper.IsEmailValid(email))
                 throw new ApiException(ApiResult.Validation, ErrorType.EmailInvalid, email);
         }
 
@@ -57,7 +48,7 @@ namespace tupapiService.Helpers.CheckHelpers
             if (string.IsNullOrWhiteSpace(password))
                 throw new ApiException(ApiResult.Validation, ErrorType.IsNull, "password");
 
-            if (password.Length < 8)
+            if (!CheckHelper.IsPasswordValid(password))
                 throw new ApiException(ApiResult.Validation, ErrorType.PasswordLength, password.Length.ToString());
             //TODO: Regular Expression for Password Validation
         }

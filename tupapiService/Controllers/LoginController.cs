@@ -45,8 +45,8 @@ namespace tupapiService.Controllers
             try
             {
                 // Check request and request props is not null
-                CheckHelper.IsNull(request, nameof(request));
-                CheckHelper.IsNull(request.Password, nameof(request.Password));
+                CheckVal.IsNull(request, nameof(request));
+                CheckVal.IsNull(request.Password, nameof(request.Password));
                 // Find User
                 var user = CheckData.UserExist(_context, false, email: request.Email, name: request.Name);
                 if (user == null)
