@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Web.Http;
 using System.Web.Http.Hosting;
 using AutoMapper;
@@ -66,7 +64,7 @@ namespace tupapiService.Test.Controllers
             };
             var response = _controller.Post(postDto);
             var result = TestHelper.ParsePostResponse(response);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }

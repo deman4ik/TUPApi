@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using tupapi.Shared.Enums;
 
 namespace tupapi.Shared.DataObjects
@@ -28,12 +24,12 @@ namespace tupapi.Shared.DataObjects
         public override string ToString()
         {
             if (Data != null)
-                return "# Api Result:" + Environment.NewLine + ApiResult.ToString() + Environment.NewLine +
-                       Data.ToString();
+                return "# Api Result:" + Environment.NewLine + ApiResult + Environment.NewLine +
+                       Data;
             if (Error != null)
-                return "# Api Result:" + Environment.NewLine + ApiResult.ToString() + Environment.NewLine +
-                       Error.ToString();
-            return "# Api Result:" + Environment.NewLine + ApiResult.ToString();
+                return "# Api Result:" + Environment.NewLine + ApiResult + Environment.NewLine +
+                       Error;
+            return "# Api Result:" + Environment.NewLine + ApiResult;
         }
     }
 }

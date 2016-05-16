@@ -12,7 +12,7 @@
 
 
         /// <summary>
-        /// Standart Photo from Premium Account
+        ///     Standart Photo from Premium Account
         /// </summary>
         Premium,
 

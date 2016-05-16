@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using tupapi.Shared.Enums;
 using tupapi.Shared.Interfaces;
 
@@ -28,6 +27,7 @@ namespace tupapiService.Helpers.ExceptionHelpers
         public ErrorType ErrorType { get; set; }
         public string InnerExceptionMessage { get; }
         public Exception Exception { get; }
+
         public override string ToString()
         {
             return "ApiResult: " + ApiResult + ", " + "ErrorType: " + ErrorType + ", " + "InnerExceptionMessage: " +

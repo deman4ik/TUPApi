@@ -8,6 +8,5 @@ namespace tupapi.Shared.Interfaces
         ErrorType ErrorType { get; }
         Exception Exception { get; }
         string Message { get; }
-
     }
 }

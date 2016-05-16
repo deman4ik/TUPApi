@@ -12,6 +12,7 @@ namespace tupapiService.Test.Infrastructure
         public ApiResult ApiResult { get; set; }
         public T Data { get; set; }
         public ErrorResponse Error { get; set; }
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -19,9 +20,9 @@ namespace tupapiService.Test.Infrastructure
             builder.AppendLine("# Is Success Status Code:" + Environment.NewLine + IsSuccessStatusCode);
             builder.AppendLine("# Api Result:" + Environment.NewLine + ApiResult);
             if (Data != null)
-                builder.AppendLine("# Data:" + Environment.NewLine + Data.ToString());
+                builder.AppendLine("# Data:" + Environment.NewLine + Data);
             if (Error != null)
-                builder.AppendLine("# Error:" + Environment.NewLine + Error.ToString());
+                builder.AppendLine("# Error:" + Environment.NewLine + Error);
             return builder.ToString();
         }
     }

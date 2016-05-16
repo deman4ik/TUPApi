@@ -1,17 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net;
+﻿using System.Diagnostics;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
 using tupapiService.Authentication;
 using tupapiService.Controllers;
-using tupapiService.Helpers.DBHelpers;
-using tupapiService.Models;
 using tupapiService.Test.Infrastructure;
 using LoginResult = tupapiService.DataObjects.LoginResult;
 
@@ -67,7 +62,7 @@ namespace tupapiService.Test.Authentication
             HttpResponseMessage response = _controller.Login(null);
             var result = TestHelper.ParseLoginResponse(response);
             Assert.IsNotNull(result);
-            Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
+
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
             Assert.AreEqual(ErrorType.IsNull, result.Error.ErrorType);
@@ -85,7 +80,7 @@ namespace tupapiService.Test.Authentication
             HttpResponseMessage response = _controller.Login(req);
             var result = TestHelper.ParseLoginResponse(response);
             Assert.IsNotNull(result);
-            Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
+
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
             Assert.AreEqual(ErrorType.IsNull, result.Error.ErrorType);
@@ -103,7 +98,7 @@ namespace tupapiService.Test.Authentication
             HttpResponseMessage response = _controller.Login(req);
             var result = TestHelper.ParseLoginResponse(response);
             Assert.IsNotNull(result);
-            Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
+
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
             Assert.AreEqual(ErrorType.UserWithEmailorNameNotFound, result.Error.ErrorType);
@@ -121,7 +116,7 @@ namespace tupapiService.Test.Authentication
             HttpResponseMessage response = _controller.Login(req);
             var result = TestHelper.ParseLoginResponse(response);
             Assert.IsNotNull(result);
-            Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
+
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Validation, result.ApiResult);
             Assert.AreEqual(ErrorType.UserWithEmailorNameNotFound, result.Error.ErrorType);
@@ -139,7 +134,7 @@ namespace tupapiService.Test.Authentication
             HttpResponseMessage response = _controller.Login(req);
             var result = TestHelper.ParseLoginResponse(response);
             Assert.IsNotNull(result);
-            Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
+
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Denied, result.ApiResult);
             Assert.AreEqual(ErrorType.PasswordWrong, result.Error.ErrorType);
@@ -157,7 +152,7 @@ namespace tupapiService.Test.Authentication
             HttpResponseMessage response = _controller.Login(req);
             var result = TestHelper.ParseLoginResponse(response);
             Assert.IsNotNull(result);
-            Assert.AreEqual(HttpStatusCode.Unauthorized.ToString(), result.StatusCode);
+
             Assert.AreEqual(false, result.IsSuccessStatusCode);
             Assert.AreEqual(ApiResult.Denied, result.ApiResult);
             Assert.AreEqual(ErrorType.UserBlocked, result.Error.ErrorType);

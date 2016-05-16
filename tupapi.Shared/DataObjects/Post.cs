@@ -30,7 +30,7 @@ namespace tupapi.Shared.DataObjects
                    "# Post UserName:" + Environment.NewLine + UserName + Environment.NewLine +
                    "# Post PhotoUrl:" + Environment.NewLine + PhotoUrl + Environment.NewLine +
                    "# Post Description:" + Environment.NewLine + Description + Environment.NewLine +
-                   "# Post Type:" + Environment.NewLine + Type.ToString() + Environment.NewLine +
+                   "# Post Type:" + Environment.NewLine + Type + Environment.NewLine +
                    "# Post Status:" + Environment.NewLine + Status + Environment.NewLine +
                    "# Post Likes:" + Environment.NewLine + Likes;
         }

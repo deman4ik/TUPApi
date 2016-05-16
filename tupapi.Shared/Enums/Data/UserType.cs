@@ -22,7 +22,7 @@
 
 
         /// <summary>
-        /// Administration Account
+        ///     Administration Account
         /// </summary>
         Admin
     }

@@ -13,6 +13,7 @@ namespace tupapiService.DataObjects
 
         public string AuthenticationToken { get; set; }
         public IUser User { get; set; }
+
         public override string ToString()
         {
             return "# Authentication Token:" + Environment.NewLine + " # User Id:" + Environment.NewLine + User.Id;

@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
-using System.Web.Configuration;
-using Microsoft.Azure.Mobile.Server.Authentication;
 using Microsoft.Azure.Mobile.Server.Login;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
@@ -32,7 +30,7 @@ namespace tupapiService.Authentication
                 var salt = AuthHelper.GenerateSalt();
                 newUser = new User
                 {
-                    Id = SequentialGuid.NewGuid().ToString(),
+                    Id = SequentialGuid.NewGuid(),
                     Name = request.Name,
                     Email = request.Email,
                     Salt = salt,
@@ -85,7 +83,7 @@ namespace tupapiService.Authentication
         public static string CreateToken(string accountId)
         {
             var token =
-                AppServiceLoginHandler.CreateToken(new Claim[] {new Claim(JwtRegisteredClaimNames.Sub, accountId)},
+                AppServiceLoginHandler.CreateToken(new[] {new Claim(JwtRegisteredClaimNames.Sub, accountId)},
                     ConfigurationManager.AppSettings["SigningKey"],
                     ConfigurationManager.AppSettings["ValidAudience"],
                     ConfigurationManager.AppSettings["ValidIssuer"],

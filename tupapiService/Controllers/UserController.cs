@@ -1,20 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Http.Description;
 using System.Web.Http.OData;
 using Microsoft.Azure.Mobile.Server;
-using tupapi.Shared.DataObjects;
-using tupapi.Shared.Enums;
 using tupapiService.Authentication;
 using tupapiService.DataObjects;
-using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Mapping;
 using tupapiService.Models;
 

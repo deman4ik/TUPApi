@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Core;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -12,7 +11,6 @@ using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
 using tupapiService.Authentication;
 using tupapiService.DataObjects;
-using tupapiService.Helpers.CheckHelpers;
 using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;
 
@@ -42,9 +40,9 @@ namespace tupapiService.Controllers
         {
             try
             {
-                var claimsPrincipal = this.User as ClaimsPrincipal;
+                var claimsPrincipal = User as ClaimsPrincipal;
                 Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Debug.WriteLine(this.Request.Headers.ToString());
+                Debug.WriteLine(Request.Headers.ToString());
                 foreach (var c in claimsPrincipal.Claims)
                 {
                     Debug.WriteLine(c.ToString());
@@ -56,17 +54,17 @@ namespace tupapiService.Controllers
             }
             catch (ApiException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized,
-                    new Response<UserDTO>(ex.ApiResult,null, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new Response<UserDTO>(ex.ApiResult, null, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
+                return Request.CreateResponse(HttpStatusCode.OK,
                     new Response<UserDTO>(ApiResult.Sql, null, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
+                return Request.CreateResponse(HttpStatusCode.OK,
                     new Response<UserDTO>(ApiResult.Unknown, null, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }

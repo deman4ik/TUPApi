@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IdentityModel.Tokens;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web.Http;
-using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
 using tupapi.Shared.DataObjects;
 using tupapiService.Authentication;
 using tupapiService.Controllers;
-using tupapiService.Helpers.DBHelpers;
-using tupapiService.Models;
 using tupapiService.Test.Infrastructure;
-using LoginResult = tupapiService.DataObjects.LoginResult;
 using User = tupapiService.Models.User;
 
 namespace tupapiService.Test.Controllers
@@ -54,7 +45,7 @@ namespace tupapiService.Test.Controllers
             var identity = new GenericIdentity(username, "");
             var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, username);
             identity.AddClaim(nameIdentifierClaim);
-            var principal = new GenericPrincipal(identity, roles: new string[] {});
+            var principal = new GenericPrincipal(identity, new string[] {});
             var user = new ClaimsPrincipal(principal);
             _controller = new UserApiController(TestContext)
             {
@@ -65,7 +56,5 @@ namespace tupapiService.Test.Controllers
             var result = TestHelper.ParseUserResponse(response);
             Assert.AreEqual("OK", result.StatusCode);
         }
-
-
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -49,7 +46,7 @@ namespace tupapiService.Helpers.StorageHelpers
         {
             try
             {
-                SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
+                SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy
                 {
                     SharedAccessStartTime = DateTime.UtcNow,
                     SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(5),

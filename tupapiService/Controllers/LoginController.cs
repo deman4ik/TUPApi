@@ -65,22 +65,24 @@ namespace tupapiService.Controllers
                 var userDto = _mapper.Map<User, UserDTO>(user);
 
                 // Generate AuthenticationToken
-                return Request.CreateResponse(HttpStatusCode.OK, new Response<LoginResult>( ApiResult.Ok,new LoginResult(token,userDto)));
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new Response<LoginResult>(ApiResult.Ok, new LoginResult(token, userDto)));
             }
             catch (ApiException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized,
+                return Request.CreateResponse(HttpStatusCode.OK,
                     new Response<LoginResult>(ex.ApiResult, null, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
+                return Request.CreateResponse(HttpStatusCode.OK,
                     new Response<LoginResult>(ApiResult.Sql, null, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new Response<LoginResult>(ApiResult.Unknown, null, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new Response<LoginResult>(ApiResult.Unknown, null,
+                        new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }
     }

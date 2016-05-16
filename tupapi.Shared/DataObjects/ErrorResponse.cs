@@ -12,7 +12,6 @@ namespace tupapi.Shared.DataObjects
             ErrorType = errorType;
             Message = message;
             Exception = exception;
-
         }
 
         public ErrorType ErrorType { get; }
@@ -21,7 +20,7 @@ namespace tupapi.Shared.DataObjects
 
         public override string ToString()
         {
-            return "# Error Type:" + Environment.NewLine + ErrorType.ToString() + Environment.NewLine +
+            return "# Error Type:" + Environment.NewLine + ErrorType + Environment.NewLine +
                    "# Response Message:" + Environment.NewLine + Message;
         }
     }

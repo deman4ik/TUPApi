@@ -16,7 +16,7 @@ namespace tupapiService.Test.Infrastructure
     public class TestHelper
     {
         /// <summary>
-        /// Provide Standart Authentication
+        ///     Provide Standart Authentication
         /// </summary>
         /// <param name="context">ITupapiContext</param>
         /// <param name="req">Creds</param>
@@ -35,17 +35,15 @@ namespace tupapiService.Test.Infrastructure
         }
 
 
-
-      
-
-        public static TestResult<LoginResult>  ParseLoginResponse(HttpResponseMessage response)
+        public static TestResult<LoginResult> ParseLoginResponse(HttpResponseMessage response)
         {
             if (response == null)
             {
                 Console.WriteLine("HttpResponseMessage is NULL");
                 return null;
             }
-            var result = JsonConvert.DeserializeObject<Response<LoginResult>>(response.Content.ReadAsStringAsync().Result);
+            var result =
+                JsonConvert.DeserializeObject<Response<LoginResult>>(response.Content.ReadAsStringAsync().Result);
 
             var testResult = new TestResult<LoginResult>
             {
@@ -88,7 +86,8 @@ namespace tupapiService.Test.Infrastructure
                 Console.WriteLine("HttpResponseMessage is NULL");
                 return null;
             }
-            var result = JsonConvert.DeserializeObject<Response<PostResponse>>(response.Content.ReadAsStringAsync().Result);
+            var result =
+                JsonConvert.DeserializeObject<Response<PostResponse>>(response.Content.ReadAsStringAsync().Result);
             var testResult = new TestResult<PostResponse>
             {
                 StatusCode = response.StatusCode.ToString(),
@@ -126,7 +125,7 @@ namespace tupapiService.Test.Infrastructure
             var identity = new GenericIdentity(id, "");
             var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, id);
             identity.AddClaim(nameIdentifierClaim);
-            var principal = new GenericPrincipal(identity, roles: new string[] {});
+            var principal = new GenericPrincipal(identity, new string[] {});
             return new ClaimsPrincipal(principal);
         }
     }

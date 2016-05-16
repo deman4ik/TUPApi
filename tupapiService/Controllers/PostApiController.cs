@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Entity.Core;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -48,7 +47,7 @@ namespace tupapiService.Controllers
         {
             try
             {
-                var claimsPrincipal = this.User as ClaimsPrincipal;
+                var claimsPrincipal = User as ClaimsPrincipal;
                 var user = BaseAuth.GetUser(_context, claimsPrincipal);
                 var id = SequentialGuid.NewGuid();
                 Post dbPost = new Post
@@ -74,18 +73,19 @@ namespace tupapiService.Controllers
             }
             catch (ApiException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized,
+                return Request.CreateResponse(HttpStatusCode.OK,
                     new Response<PostResponse>(ex.ApiResult, null, new ErrorResponse(ex.ErrorType, ex.Message, ex)));
             }
             catch (EntitySqlException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
+                return Request.CreateResponse(HttpStatusCode.OK,
                     new Response<PostResponse>(ApiResult.Sql, null, new ErrorResponse(ErrorType.None, ex.Message, ex)));
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError,
-                    new Response<PostResponse>(ApiResult.Unknown, null, new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new Response<PostResponse>(ApiResult.Unknown, null,
+                        new ErrorResponse(ErrorType.Internal, ex.Message, ex)));
             }
         }
     }

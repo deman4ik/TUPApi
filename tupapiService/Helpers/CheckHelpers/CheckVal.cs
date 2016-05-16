@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using tupapi.Shared.Enums;
+﻿using tupapi.Shared.Enums;
 using tupapi.Shared.Helpers;
 using tupapiService.Helpers.ExceptionHelpers;
 
@@ -29,7 +27,6 @@ namespace tupapiService.Helpers.CheckHelpers
             }
         }
 
-       
 
         public static void NameCheck(string name)
         {

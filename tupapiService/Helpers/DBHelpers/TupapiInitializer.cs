@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
-using tupapi.Shared.Data;
 using tupapiService.Models;
 
 namespace tupapiService.Helpers.DBHelpers
