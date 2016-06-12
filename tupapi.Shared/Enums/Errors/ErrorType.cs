@@ -9,7 +9,7 @@
         /// </summary>
         IsNull = 1,
 
-
+        NotConnected = 2,
         Internal = 3,
         //Login and Registration
         EmailInvalid = 100,

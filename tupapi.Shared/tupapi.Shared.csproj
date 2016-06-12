@@ -39,6 +39,8 @@
     <Compile Include="DataObjects\LoginResult.cs" />
     <Compile Include="DataObjects\PostResponse.cs" />
     <Compile Include="DataObjects\Response.cs" />
+    <Compile Include="DataObjects\TopPost.cs" />
+    <Compile Include="DataObjects\VoteItem.cs" />
     <Compile Include="Helpers\CheckHelper.cs" />
     <Compile Include="Helpers\Const.cs" />
     <Compile Include="DataObjects\StandartAuthRequest.cs" />

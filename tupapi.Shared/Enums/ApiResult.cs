@@ -54,6 +54,8 @@
         /// <summary>
         ///     An entity Not Found
         /// </summary>
-        NotFound = 9
+        NotFound = 9,
+
+        NoConnection = 10
     }
 }
