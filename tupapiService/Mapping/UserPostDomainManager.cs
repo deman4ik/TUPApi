@@ -17,6 +17,7 @@ namespace tupapiService.Mapping
     public class UserPostDomainManager : GenericMappedEntityDomainManager<PostDTO, Post>
     {
         private readonly string _userId;
+
         public UserPostDomainManager(TupapiContext context, HttpRequestMessage request)
             : base(context, request)
         {
@@ -43,7 +44,8 @@ namespace tupapiService.Mapping
             {
                 throw new ArgumentNullException("id");
             }
-            var query = Context.Set<Post>().Where(item => item.Id == id && item.UserId == _userId).ProjectTo<PostDTO>(_config);
+            var query =
+                Context.Set<Post>().Where(item => item.Id == id && item.UserId == _userId).ProjectTo<PostDTO>(_config);
             query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return SingleResult.Create(query);
         }

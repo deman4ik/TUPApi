@@ -96,11 +96,11 @@ namespace tupapiService.Authentication
 
         public static string GetUserId()
         {
-            var identity = (ClaimsIdentity)HttpContext.Current.User.Identity;
+            var identity = (ClaimsIdentity) HttpContext.Current.User.Identity;
             var claims = identity.Claims;
             var nameIdentifier = (from c in claims
-                                  where c.Type == ClaimTypes.NameIdentifier
-                                  select c.Value).SingleOrDefault();
+                where c.Type == ClaimTypes.NameIdentifier
+                select c.Value).SingleOrDefault();
 
             if (nameIdentifier == null)
             {
@@ -112,7 +112,7 @@ namespace tupapiService.Authentication
 
         public static string GetUserId(HttpRequestContext context)
         {
-            var identity = (ClaimsIdentity)context.Principal.Identity;
+            var identity = (ClaimsIdentity) context.Principal.Identity;
             var claims = identity.Claims;
             var nameIdentifier = (from c in claims
                 where c.Type == ClaimTypes.NameIdentifier
@@ -122,7 +122,7 @@ namespace tupapiService.Authentication
             {
                 throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound, null);
             }
-                
+
             return nameIdentifier;
         }
 
@@ -159,6 +159,5 @@ namespace tupapiService.Authentication
                 throw new ApiException(ApiResult.Denied, ErrorType.UserNotFound, userId);
             return user;
         }
-
     }
 }

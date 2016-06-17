@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Data.Entity.Core;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.Azure.Mobile.Server.Config;
@@ -40,7 +38,6 @@ namespace tupapiService.Controllers
         {
             try
             {
-              
                 var user = BaseAuth.GetUser(_context, RequestContext);
                 var mapper = _config.CreateMapper();
                 var userDto = mapper.Map<Models.User, UserDTO>(user);

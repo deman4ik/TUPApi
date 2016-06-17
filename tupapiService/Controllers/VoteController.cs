@@ -22,7 +22,7 @@ namespace tupapiService.Controllers
         // GET tables/Vote
         public IQueryable<VoteDTO> GetAllVote()
         {
-            return Query(); 
+            return Query();
         }
 
         // GET tables/Vote/48D68C86-6EA6-4C25-AA33-223FC9A27959
@@ -34,20 +34,20 @@ namespace tupapiService.Controllers
         // PATCH tables/Vote/48D68C86-6EA6-4C25-AA33-223FC9A27959
         public Task<VoteDTO> PatchVote(string id, Delta<VoteDTO> patch)
         {
-             return UpdateAsync(id, patch);
+            return UpdateAsync(id, patch);
         }
 
         // POST tables/Vote
         public async Task<IHttpActionResult> PostVote(VoteDTO item)
         {
             VoteDTO current = await InsertAsync(item);
-            return CreatedAtRoute("Tables", new { id = current.Id }, current);
+            return CreatedAtRoute("Tables", new {id = current.Id}, current);
         }
 
         // DELETE tables/Vote/48D68C86-6EA6-4C25-AA33-223FC9A27959
         public Task DeleteVote(string id)
         {
-             return DeleteAsync(id);
+            return DeleteAsync(id);
         }
     }
 }

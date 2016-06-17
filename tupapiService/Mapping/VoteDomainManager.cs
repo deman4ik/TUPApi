@@ -17,6 +17,7 @@ namespace tupapiService.Mapping
     public class VoteDomainManager : GenericMappedEntityDomainManager<VoteDTO, Vote>
     {
         private readonly string _userId;
+
         public VoteDomainManager(TupapiContext context, HttpRequestMessage request)
             : base(context, request)
         {
@@ -43,7 +44,8 @@ namespace tupapiService.Mapping
             {
                 throw new ArgumentNullException("id");
             }
-            var query = Context.Set<Vote>().Where(item => item.Id == id && item.UserId == _userId).ProjectTo<VoteDTO>(_config);
+            var query =
+                Context.Set<Vote>().Where(item => item.Id == id && item.UserId == _userId).ProjectTo<VoteDTO>(_config);
             query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return SingleResult.Create(query);
         }

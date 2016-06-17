@@ -82,8 +82,8 @@ namespace tupapiService.Models
                 .HasForeignKey(s => s.PostId);
         }
 
-        public System.Data.Entity.DbSet<tupapiService.DataObjects.PostDTO> PostDTOes { get; set; }
+        public DbSet<DataObjects.PostDTO> PostDTOes { get; set; }
 
-        public System.Data.Entity.DbSet<tupapiService.DataObjects.VoteDTO> VoteDTOes { get; set; }
+        public DbSet<DataObjects.VoteDTO> VoteDTOes { get; set; }
     }
 }

@@ -23,7 +23,6 @@ namespace tupapiService.Mapping
                 //VoteDTO Mapping
                 cfg.CreateMap<Vote, VoteDTO>();
                 cfg.CreateMap<VoteDTO, Vote>();
-
             });
         }
     }

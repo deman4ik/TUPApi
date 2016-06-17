@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using tupapi.Shared.Enums;
 using tupapi.Shared.Interfaces;
 using ITableData = Microsoft.Azure.Mobile.Server.Tables.ITableData;

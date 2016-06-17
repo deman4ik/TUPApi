@@ -27,7 +27,6 @@ namespace tupapiService.Controllers
 
         public IQueryable<UserDTO> GetAllUsers()
         {
-
             var userId = BaseAuth.GetUserId(RequestContext);
             return Query().Where(u => u.Id == userId);
         }

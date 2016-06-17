@@ -1,8 +1,5 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Http.OData;
 using Microsoft.Azure.Mobile.Server;
 using tupapi.Shared.Enums;
 using tupapiService.DataObjects;
@@ -27,7 +24,5 @@ namespace tupapiService.Controllers
         {
             return Query().Where(p => p.Status == PhotoStatus.Ended).OrderBy(o => o.Likes);
         }
-
-
     }
 }

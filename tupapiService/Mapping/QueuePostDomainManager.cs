@@ -1,15 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.OData;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Azure.Mobile.Server.Tables;
 using tupapi.Shared.Enums;
 using tupapiService.Authentication;
 using tupapiService.DataObjects;
-using tupapiService.Helpers.ExceptionHelpers;
 using tupapiService.Models;
 
 namespace tupapiService.Mapping
@@ -17,6 +12,7 @@ namespace tupapiService.Mapping
     public class QueuePostDomainManager : GenericMappedEntityDomainManager<PostDTO, Post>
     {
         private readonly string _userId;
+
         public QueuePostDomainManager(TupapiContext context, HttpRequestMessage request)
             : base(context, request)
         {
@@ -31,12 +27,14 @@ namespace tupapiService.Mapping
 
         public override IQueryable<PostDTO> Query()
         {
-            var query = Context.Set<Post>().Where(item => item.Status == PhotoStatus.Running && item.Votes.Count(v => v.UserId == _userId) > 0).OrderBy(o => o.CreatedAt).ProjectTo<PostDTO>(_config);
+            var query =
+                Context.Set<Post>()
+                    .Where(item => item.Status == PhotoStatus.Running && item.Votes.Count(v => v.UserId == _userId) > 0)
+                    .OrderBy(o => o.CreatedAt)
+                    .ProjectTo<PostDTO>(_config);
 
             query = TableUtils.ApplyDeletedFilter(query, IncludeDeleted);
             return query;
         }
-
-       
     }
 }
