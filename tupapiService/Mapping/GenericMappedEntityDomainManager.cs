@@ -52,6 +52,7 @@ namespace tupapiService.Mapping
             return SingleResult.Create(query);
         }
 
+       
 
         public override Task<TData> UpdateAsync(string id, Delta<TData> patch)
         {

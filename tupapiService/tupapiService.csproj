@@ -229,9 +229,12 @@
     <Compile Include="Authentication\AccessToken.cs" />
     <Compile Include="Authentication\BaseAuth.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\QueuePostController.cs" />
+    <Compile Include="Controllers\UserPostController.cs" />
+    <Compile Include="Controllers\VoteController.cs" />
     <Compile Include="DataObjects\LoginResult.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
-    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\TopPostController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
@@ -239,6 +242,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataObjects\PostDTO.cs" />
     <Compile Include="DataObjects\UserDTO.cs" />
+    <Compile Include="DataObjects\VoteDTO.cs" />
     <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Helpers\CheckHelpers\CheckData.cs" />
     <Compile Include="Helpers\DBHelpers\TestDbPopulator.cs" />
@@ -249,6 +253,9 @@
     <Compile Include="Helpers\StorageHelpers\AzureStorage.cs" />
     <Compile Include="Mapping\GenericMappedEntityDomainManager.cs" />
     <Compile Include="Mapping\Mapping.cs" />
+    <Compile Include="Mapping\QueuePostDomainManager.cs" />
+    <Compile Include="Mapping\VoteDomainManager.cs" />
+    <Compile Include="Mapping\UserPostDomainManager.cs" />
     <Compile Include="Mapping\PostDomainManager.cs" />
     <Compile Include="Mapping\UserDomainManager.cs" />
     <Compile Include="Helpers\DBHelpers\DbValidationHelper.cs" />

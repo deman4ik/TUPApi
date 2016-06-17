@@ -40,14 +40,8 @@ namespace tupapiService.Controllers
         {
             try
             {
-                var claimsPrincipal = User as ClaimsPrincipal;
-                Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Debug.WriteLine(Request.Headers.ToString());
-                foreach (var c in claimsPrincipal.Claims)
-                {
-                    Debug.WriteLine(c.ToString());
-                }
-                var user = BaseAuth.GetUser(_context, claimsPrincipal);
+              
+                var user = BaseAuth.GetUser(_context, RequestContext);
                 var mapper = _config.CreateMapper();
                 var userDto = mapper.Map<Models.User, UserDTO>(user);
                 return Request.CreateResponse(HttpStatusCode.OK, new Response<UserDTO>(ApiResult.Ok, userDto));

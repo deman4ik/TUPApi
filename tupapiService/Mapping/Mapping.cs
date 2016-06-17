@@ -20,6 +20,10 @@ namespace tupapiService.Mapping
                     .ForMember(dst => dst.UserName, map => map.MapFrom(src => src.User.Name))
                     .ForMember(dst => dst.Likes, map => map.MapFrom(src => src.Votes.Count(v => v.Type == VoteType.Up)));
                 cfg.CreateMap<PostDTO, Post>();
+                //VoteDTO Mapping
+                cfg.CreateMap<Vote, VoteDTO>();
+                cfg.CreateMap<VoteDTO, Vote>();
+
             });
         }
     }

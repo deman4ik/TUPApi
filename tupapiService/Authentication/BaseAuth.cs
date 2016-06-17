@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
+using System.Web;
+using System.Web.Http.Controllers;
 using Microsoft.Azure.Mobile.Server.Login;
 using tupapi.Shared.DataObjects;
 using tupapi.Shared.Enums;
@@ -92,11 +94,61 @@ namespace tupapiService.Authentication
             return token.RawData;
         }
 
+        public static string GetUserId()
+        {
+            var identity = (ClaimsIdentity)HttpContext.Current.User.Identity;
+            var claims = identity.Claims;
+            var nameIdentifier = (from c in claims
+                                  where c.Type == ClaimTypes.NameIdentifier
+                                  select c.Value).SingleOrDefault();
+
+            if (nameIdentifier == null)
+            {
+                throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound, null);
+            }
+
+            return nameIdentifier;
+        }
+
+        public static string GetUserId(HttpRequestContext context)
+        {
+            var identity = (ClaimsIdentity)context.Principal.Identity;
+            var claims = identity.Claims;
+            var nameIdentifier = (from c in claims
+                where c.Type == ClaimTypes.NameIdentifier
+                select c.Value).SingleOrDefault();
+
+            if (nameIdentifier == null)
+            {
+                throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound, null);
+            }
+                
+            return nameIdentifier;
+        }
+
         public static string GetUserId(ClaimsPrincipal claimsPrincipal)
         {
             if (claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier) == null)
                 throw new ApiException(ApiResult.Denied, ErrorType.ClaimNotFound, null);
             return claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
+        }
+
+        public static User GetUser(ITupapiContext context)
+        {
+            string userId = GetUserId();
+            var user = context.Users.AsNoTracking().SingleOrDefault(u => u.Id == userId);
+            if (user == null)
+                throw new ApiException(ApiResult.Denied, ErrorType.UserNotFound, userId);
+            return user;
+        }
+
+        public static User GetUser(ITupapiContext context, HttpRequestContext httpRequestContextcontext)
+        {
+            string userId = GetUserId(httpRequestContextcontext);
+            var user = context.Users.AsNoTracking().SingleOrDefault(u => u.Id == userId);
+            if (user == null)
+                throw new ApiException(ApiResult.Denied, ErrorType.UserNotFound, userId);
+            return user;
         }
 
         public static User GetUser(ITupapiContext context, ClaimsPrincipal claimsPrincipal)
@@ -107,5 +159,6 @@ namespace tupapiService.Authentication
                 throw new ApiException(ApiResult.Denied, ErrorType.UserNotFound, userId);
             return user;
         }
+
     }
 }
